@@ -152,6 +152,14 @@ public class Beacon {
         return id;
     }
 
+    public String getType() {
+        return type;
+    }
+
+    public int getRssi(){
+        return rssi;
+    }
+
     public static Beacon from(byte[] id, int rssi) {
         return new Beacon("EDDYSTONE", id, Beacon.Status.STATUS_UNSPECIFIED, rssi);
     }
