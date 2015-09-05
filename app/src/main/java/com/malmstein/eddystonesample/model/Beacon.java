@@ -152,4 +152,8 @@ public class Beacon {
         return id;
     }
 
+    public static Beacon from(byte[] id, int rssi) {
+        return new Beacon("EDDYSTONE", id, Beacon.Status.STATUS_UNSPECIFIED, rssi);
+    }
+
 }

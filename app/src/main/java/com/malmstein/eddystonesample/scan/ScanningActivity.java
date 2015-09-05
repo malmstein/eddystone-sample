@@ -13,10 +13,11 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import com.malmstein.eddystonesample.R;
-import com.malmstein.eddystonesample.ble.BluetoothScanner;
+import com.malmstein.eddystonesample.proximitybeacon.BluetoothScanner;
+import com.malmstein.eddystonesample.model.Beacon;
 import com.novoda.notils.caster.Views;
 
-public class ScanningActivity extends AppCompatActivity {
+public class ScanningActivity extends AppCompatActivity implements BluetoothScanner.Listener {
 
     public static final int REQUEST_CODE_ENABLE_BLE = 1001;
 
@@ -80,4 +81,8 @@ public class ScanningActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onBeaconScanned(Beacon fetchedBeacon) {
+        beaconsView.updateWith(fetchedBeacon);
+    }
 }

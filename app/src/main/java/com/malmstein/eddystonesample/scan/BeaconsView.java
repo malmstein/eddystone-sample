@@ -7,11 +7,15 @@ import android.view.LayoutInflater;
 import android.widget.FrameLayout;
 
 import com.malmstein.eddystonesample.R;
+import com.malmstein.eddystonesample.model.Beacon;
 import com.novoda.notils.caster.Views;
 
 public class BeaconsView extends FrameLayout {
 
+    private static final String TAG = BeaconsView.class.getSimpleName();
+
     private RecyclerView beaconsList;
+    private BeaconArrayAdapter beaconArrayAdapter;
 
     public BeaconsView(Context context) {
         super(context);
@@ -30,10 +34,11 @@ public class BeaconsView extends FrameLayout {
         super.onFinishInflate();
 
         LayoutInflater.from(getContext()).inflate(R.layout.view_beacons, this, true);
-
-
         beaconsList = Views.findById(this, R.id.beacons_list);
+    }
 
+    public void updateWith(Beacon beacon) {
+        beaconArrayAdapter.add(beacon);
     }
 
 }
