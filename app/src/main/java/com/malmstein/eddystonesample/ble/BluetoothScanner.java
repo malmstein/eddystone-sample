@@ -49,7 +49,7 @@ public class BluetoothScanner {
 
     public void startScan(BluetoothAdapter btAdapter) {
         scanner = btAdapter.getBluetoothLeScanner();
-        scanner.startScan(EddystoneFilters.SCAN_FILTERS, EddystoneFilters.SCAN_SETTINGS, bleScanCallback);
+        scanner.startScan(SCAN_FILTERS, SCAN_SETTINGS, bleScanCallback);
     }
 
 }
