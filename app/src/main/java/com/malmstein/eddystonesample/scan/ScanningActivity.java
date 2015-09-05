@@ -14,7 +14,6 @@ import android.view.View;
 
 import com.malmstein.eddystonesample.R;
 import com.malmstein.eddystonesample.ble.BluetoothScanner;
-import com.malmstein.eddystonesample.ble.EddystoneFilters;
 import com.novoda.notils.caster.Views;
 
 public class ScanningActivity extends AppCompatActivity {
@@ -46,7 +45,7 @@ public class ScanningActivity extends AppCompatActivity {
         scanFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                bluetoothScanner.startScan();
+                scanOrRequestPermission();
             }
         });
     }
@@ -60,16 +59,16 @@ public class ScanningActivity extends AppCompatActivity {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == BluetoothScanner.REQUEST_CODE_ENABLE_BLE) {
+        if (requestCode == REQUEST_CODE_ENABLE_BLE) {
             if (resultCode == Activity.RESULT_OK) {
-                bluetoothScanner.startScan(btAdapter);
+                scanOrRequestPermission();
             } else if (resultCode == Activity.RESULT_CANCELED) {
                 Snackbar.make(beaconsView, R.string.bluetooth_please_enable, Snackbar.LENGTH_LONG).show();
             }
         }
     }
 
-    private void startScan() {
+    private void scanOrRequestPermission() {
         BluetoothManager btManager = (BluetoothManager) getSystemService(Context.BLUETOOTH_SERVICE);
         BluetoothAdapter btAdapter = btManager.getAdapter();
 
@@ -78,8 +77,6 @@ public class ScanningActivity extends AppCompatActivity {
             startActivityForResult(enableBtIntent, REQUEST_CODE_ENABLE_BLE);
         } else {
             bluetoothScanner.startScan(btAdapter);
-            scanner = btAdapter.getBluetoothLeScanner();
-            scanner.startScan(EddystoneFilters.SCAN_FILTERS, EddystoneFilters.SCAN_SETTINGS, this);
         }
     }
 
