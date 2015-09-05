@@ -1,8 +1,8 @@
 <resources>
 
-  <!-- Base application theme. -->
-  <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-    <!-- Customize your theme here. -->
+  <style name="Eddystone" parent="@style/Theme.AppCompat.NoActionBar">
+    <item name="android:colorBackground">@color/background_material_dark</item>
+    <item name="android:textColorPrimary">@color/primary_text_default</item>
   </style>
 
 </resources>
