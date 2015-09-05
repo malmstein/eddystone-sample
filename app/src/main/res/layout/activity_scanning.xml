@@ -34,7 +34,7 @@
     android:layout_gravity="bottom|end"
     android:layout_margin="@dimen/default_fab_margin"
     android:src="@drawable/ic_beacon_scan"
-    app:layout_anchor="@id/lvToDoList"
+    app:layout_anchor="@id/beacons_view"
     app:layout_anchorGravity="bottom|right|end" />
 
 </android.support.design.widget.CoordinatorLayout>
