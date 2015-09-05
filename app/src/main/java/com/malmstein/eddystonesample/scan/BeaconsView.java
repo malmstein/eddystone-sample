@@ -9,19 +9,19 @@ import android.widget.FrameLayout;
 import com.malmstein.eddystonesample.R;
 import com.novoda.notils.caster.Views;
 
-public class BeaconsList extends FrameLayout {
+public class BeaconsView extends FrameLayout {
 
     private RecyclerView beaconsList;
 
-    public BeaconsList(Context context) {
+    public BeaconsView(Context context) {
         super(context);
     }
 
-    public BeaconsList(Context context, AttributeSet attrs) {
+    public BeaconsView(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public BeaconsList(Context context, AttributeSet attrs, int defStyleAttr) {
+    public BeaconsView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 
