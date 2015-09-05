@@ -1,7 +1,10 @@
 package com.malmstein.eddystonesample.scan;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -27,6 +30,18 @@ public class ScanningActivity extends AppCompatActivity {
         setupToolbar();
         setupActions();
         setupBleManager();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == BleManager.REQUEST_CODE_ENABLE_BLE) {
+            if (resultCode == Activity.RESULT_OK) {
+                bleManager.startScan();
+            } else if (resultCode == Activity.RESULT_CANCELED) {
+                Snackbar.make(beaconsView, R.string.bluetooth_please_enable, Snackbar.LENGTH_LONG).show();
+            }
+        }
     }
 
     private void setupBleManager() {

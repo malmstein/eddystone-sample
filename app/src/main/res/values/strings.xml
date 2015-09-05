@@ -3,6 +3,6 @@
 
   <string name="activity_scanning">Eddystone Sample</string>
 
-  <string name="bluetooth_cant_enable">Can\'t enable Bluetooth</string>
+  <string name="bluetooth_please_enable">Please enable Bluetooth</string>
 
 </resources>

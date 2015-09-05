@@ -3,6 +3,7 @@ package com.malmstein.eddystonesample.ble;
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothManager;
+import android.bluetooth.le.BluetoothLeScanner;
 import android.content.Context;
 import android.content.Intent;
 
@@ -10,6 +11,7 @@ public class BleManager {
 
     public static final int REQUEST_CODE_ENABLE_BLE = 1001;
 
+    private BluetoothLeScanner scanner;
     private final Activity activity;
 
     public BleManager(Activity activity) {
@@ -23,8 +25,9 @@ public class BleManager {
         if (btAdapter == null || !btAdapter.isEnabled()) {
             Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
             activity.startActivityForResult(enableBtIntent, REQUEST_CODE_ENABLE_BLE);
+        } else {
+            scanner = btAdapter.getBluetoothLeScanner();
         }
-
     }
 
 
