@@ -1,5 +1,4 @@
-<android.support.design.widget.CoordinatorLayout
-  xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:app="http://schemas.android.com/apk/res-auto"
   android:id="@+id/main_content"
   android:layout_width="match_parent"
@@ -21,11 +20,18 @@
 
   </android.support.design.widget.AppBarLayout>
 
+  <com.malmstein.eddystonesample.scan.AccountView
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    android:id="@+id/accounts_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" />
+
   <com.malmstein.eddystonesample.scan.BeaconsView
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     android:id="@+id/beacons_view"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" />
+    android:layout_height="match_parent"
+    android:visibility="gone" />
 
   <android.support.design.widget.FloatingActionButton
     android:id="@+id/action_scan"
@@ -35,7 +41,8 @@
     android:layout_margin="@dimen/default_fab_margin"
     android:src="@drawable/ic_beacon_scan"
     app:layout_anchor="@id/beacons_view"
-    app:layout_anchorGravity="bottom|right|end" />
+    app:layout_anchorGravity="bottom|right|end"
+    android:visibility="gone" />
 
 </android.support.design.widget.CoordinatorLayout>
 
