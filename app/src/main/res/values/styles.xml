@@ -1,7 +1,11 @@
 <resources>
 
   <style name="Eddystone" parent="@style/Theme.AppCompat.NoActionBar">
-    <item name="android:colorBackground">@color/background_material_dark</item>
+    <item name="colorPrimary">@color/color_primary</item>
+    <item name="colorPrimaryDark">@color/color_primary_dark</item>
+    <item name="colorAccent">@color/color_accent</item>
+    <item name="android:windowBackground">@color/color_background</item>
+    <item name="android:colorBackground">@color/color_background</item>
     <item name="android:textColorPrimary">@color/primary_text_default</item>
   </style>
 

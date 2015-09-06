@@ -11,7 +11,7 @@
     android:label="@string/app_name"
     android:theme="@style/Eddystone">
     <activity
-      android:name=".scan.ScanningActivity"
+      android:name=".EddystoneActivity"
       android:label="@string/app_name"
       android:theme="@style/Eddystone">
       <intent-filter>

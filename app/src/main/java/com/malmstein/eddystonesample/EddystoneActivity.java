@@ -1,4 +1,4 @@
-package com.malmstein.eddystonesample.scan;
+package com.malmstein.eddystonesample;
 
 import android.accounts.AccountManager;
 import android.app.Activity;
@@ -11,20 +11,23 @@ import android.os.Handler;
 import android.os.Looper;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import com.github.jorgecastilloprz.FABProgressCircle;
 import com.google.android.gms.common.AccountPicker;
-import com.malmstein.eddystonesample.R;
+import com.malmstein.eddystonesample.account.AccountView;
 import com.malmstein.eddystonesample.model.Beacon;
 import com.malmstein.eddystonesample.proximitybeacon.BluetoothScanner;
 import com.malmstein.eddystonesample.proximitybeacon.ProximityBeacon;
 import com.malmstein.eddystonesample.proximitybeacon.ProximityBeaconImpl;
+import com.malmstein.eddystonesample.scan.BeaconsView;
 import com.novoda.notils.caster.Views;
 
-public class ScanningActivity extends AppCompatActivity implements BluetoothScanner.Listener, AccountView.Listener {
+public class EddystoneActivity extends AppCompatActivity implements BluetoothScanner.Listener, AccountView.Listener {
 
     static final int REQUEST_CODE_PICK_ACCOUNT = 1000;
     static final int REQUEST_CODE_ENABLE_BLE = 1001;
@@ -40,18 +43,23 @@ public class ScanningActivity extends AppCompatActivity implements BluetoothScan
     private FloatingActionButton scanFab;
     private FABProgressCircle progressCircle;
 
+    private ViewPager viewPager;
+    private EddystonePagerAdapter eddystonePagerAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scanning);
 
-        beaconsView = Views.findById(this, R.id.beacons_view);
+//        beaconsView = Views.findById(this, R.id.beacons_view);
         scanFab = Views.findById(this, R.id.action_scan);
         progressCircle = Views.findById(this, R.id.action_scan_progress_circle);
 
         setupToolbar();
+        setupHeaders();
+        setupTabs();
         setupActions();
-        setupAccount();
+//        setupAccount();
     }
 
     private void setupActions() {
@@ -69,9 +77,21 @@ public class ScanningActivity extends AppCompatActivity implements BluetoothScan
         setTitle(R.string.activity_scanning);
     }
 
+    private void setupHeaders() {
+        viewPager = (ViewPager) findViewById(R.id.viewpager);
+        eddystonePagerAdapter = new EddystonePagerAdapter(getSupportFragmentManager());
+        viewPager.setAdapter(eddystonePagerAdapter);
+    }
+
+    private void setupTabs() {
+        final TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
+        tabLayout.setTabMode(TabLayout.MODE_FIXED);
+        tabLayout.setupWithViewPager(viewPager);
+    }
+
     private void setupAccount() {
-        accountView = Views.findById(this, R.id.accounts_view);
-        accountView.setup(this);
+//        accountView = Views.findById(this, R.id.accounts_view);
+//        accountView.setup(this);
     }
 
     @Override

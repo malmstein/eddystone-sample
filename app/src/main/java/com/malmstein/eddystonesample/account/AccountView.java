@@ -1,4 +1,4 @@
-package com.malmstein.eddystonesample.scan;
+package com.malmstein.eddystonesample.account;
 
 import android.content.Context;
 import android.util.AttributeSet;
