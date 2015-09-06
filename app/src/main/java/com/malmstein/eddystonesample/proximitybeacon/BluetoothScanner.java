@@ -35,15 +35,11 @@ public class BluetoothScanner {
 
     public void startScan(BluetoothAdapter btAdapter) {
         scanner = btAdapter.getBluetoothLeScanner();
-        scanner.startScan(Eddystone.SCAN_FILTERS, Eddystone.SCAN_SETTINGS, new ScanCallback() {
-            @Override
-            public void onScanResult(int callbackType, ScanResult result) {
-                Beacon scannedBeacon = validateScan(result);
-                if (scannedBeacon != null) {
-                    fetchBeaconStatus(scannedBeacon);
-                }
-            }
-        });
+        scanner.startScan(Eddystone.SCAN_FILTERS, Eddystone.SCAN_SETTINGS, scanCallback);
+    }
+
+    public void stopScan() {
+        scanner.stopScan(scanCallback);
     }
 
     private Beacon validateScan(ScanResult result) {
@@ -115,6 +111,16 @@ public class BluetoothScanner {
             }
         }
     }
+
+    ScanCallback scanCallback = new ScanCallback() {
+        @Override
+        public void onScanResult(int callbackType, ScanResult result) {
+            Beacon scannedBeacon = validateScan(result);
+            if (scannedBeacon != null) {
+                fetchBeaconStatus(scannedBeacon);
+            }
+        }
+    };
 
     public interface Listener {
         void onBeaconScanned(Beacon beacon);

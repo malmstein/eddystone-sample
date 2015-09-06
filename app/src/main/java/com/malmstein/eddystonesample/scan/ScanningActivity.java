@@ -7,6 +7,8 @@ import android.bluetooth.BluetoothManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -26,6 +28,9 @@ public class ScanningActivity extends AppCompatActivity implements BluetoothScan
 
     static final int REQUEST_CODE_PICK_ACCOUNT = 1000;
     static final int REQUEST_CODE_ENABLE_BLE = 1001;
+
+    private static final long SCAN_TIME_MILLIS = 10000;
+    private static final Handler handler = new Handler(Looper.getMainLooper());
 
     private ProximityBeacon proximityBeacon;
     private BluetoothScanner bluetoothScanner;
@@ -53,7 +58,6 @@ public class ScanningActivity extends AppCompatActivity implements BluetoothScan
         scanFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                progressCircle.show();
                 scanOrRequestPermission();
             }
         });
@@ -106,9 +110,22 @@ public class ScanningActivity extends AppCompatActivity implements BluetoothScan
             Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
             startActivityForResult(enableBtIntent, REQUEST_CODE_ENABLE_BLE);
         } else {
-            bluetoothScanner = new BluetoothScanner(proximityBeacon, this);
-            bluetoothScanner.startScan(btAdapter);
+            startScanning(btAdapter);
         }
+    }
+
+    private void startScanning(BluetoothAdapter btAdapter) {
+        progressCircle.show();
+        bluetoothScanner = new BluetoothScanner(proximityBeacon, this);
+        bluetoothScanner.startScan(btAdapter);
+        Runnable stopScanning = new Runnable() {
+            @Override
+            public void run() {
+                progressCircle.hide();
+                bluetoothScanner.stopScan();
+            }
+        };
+        handler.postDelayed(stopScanning, SCAN_TIME_MILLIS);
     }
 
     @Override
