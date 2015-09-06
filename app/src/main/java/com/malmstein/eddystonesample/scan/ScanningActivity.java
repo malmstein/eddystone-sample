@@ -13,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
+import com.github.jorgecastilloprz.FABProgressCircle;
 import com.google.android.gms.common.AccountPicker;
 import com.malmstein.eddystonesample.R;
 import com.malmstein.eddystonesample.model.Beacon;
@@ -28,9 +29,11 @@ public class ScanningActivity extends AppCompatActivity implements BluetoothScan
 
     private ProximityBeacon proximityBeacon;
     private BluetoothScanner bluetoothScanner;
+
     private AccountView accountView;
     private BeaconsView beaconsView;
     private FloatingActionButton scanFab;
+    private FABProgressCircle progressCircle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +42,7 @@ public class ScanningActivity extends AppCompatActivity implements BluetoothScan
 
         beaconsView = Views.findById(this, R.id.beacons_view);
         scanFab = Views.findById(this, R.id.action_scan);
+        progressCircle = Views.findById(this, R.id.action_scan_progress_circle);
 
         setupToolbar();
         setupActions();
@@ -49,6 +53,7 @@ public class ScanningActivity extends AppCompatActivity implements BluetoothScan
         scanFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                progressCircle.show();
                 scanOrRequestPermission();
             }
         });

@@ -30,6 +30,7 @@ dependencies {
 
     compile 'com.squareup.okhttp:okhttp:2.4.0'
     compile 'com.novoda:notils:2.2.8'
+    compile 'com.github.jorgecastilloprz:fabprogresscircle:1.01@aar'
 
     testCompile 'junit:junit:4.12'
     testCompile 'org.mockito:mockito-all:1.9.5'
