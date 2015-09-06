@@ -68,39 +68,43 @@ public class BluetoothScanner {
     }
 
     private void fetchBeaconStatus(final Beacon beacon) {
-        proximityBeacon.getBeacon(new Callback() {
-            @Override
-            public void onFailure(Request request, IOException e) {
-                Log.e(TAG, String.format("Failed request: %s, IOException %s", request, e));
-            }
-
-            @Override
-            public void onResponse(Response response) throws IOException {
-                Beacon fetchedBeacon;
-                switch (response.code()) {
-                    case 200:
-                        try {
-                            String body = response.body().string();
-                            fetchedBeacon = new Beacon(new JSONObject(body));
-                        } catch (JSONException e) {
-                            Log.e(TAG, "JSONException", e);
-                            return;
-                        }
-                        break;
-                    case 403:
-                        fetchedBeacon = new Beacon(beacon.getType(), beacon.getId(), Beacon.Status.NOT_AUTHORIZED, beacon.getRssi());
-                        break;
-                    case 404:
-                        fetchedBeacon = new Beacon(beacon.getType(), beacon.getId(), Beacon.Status.UNREGISTERED, beacon.getRssi());
-                        break;
-                    default:
-                        Log.e(TAG, "Unhandled beacon service response: " + response);
-                        return;
+        if (proximityBeacon == null){
+            listener.onBeaconScanned(beacon);
+        } else {
+            proximityBeacon.getBeacon(new Callback() {
+                @Override
+                public void onFailure(Request request, IOException e) {
+                    Log.e(TAG, String.format("Failed request: %s, IOException %s", request, e));
                 }
-                updateBeaconsList(fetchedBeacon);
-                listener.onBeaconScanned(fetchedBeacon);
-            }
-        }, beacon.getBeaconName());
+
+                @Override
+                public void onResponse(Response response) throws IOException {
+                    Beacon fetchedBeacon;
+                    switch (response.code()) {
+                        case 200:
+                            try {
+                                String body = response.body().string();
+                                fetchedBeacon = new Beacon(new JSONObject(body));
+                            } catch (JSONException e) {
+                                Log.e(TAG, "JSONException", e);
+                                return;
+                            }
+                            break;
+                        case 403:
+                            fetchedBeacon = new Beacon(beacon.getType(), beacon.getId(), Beacon.Status.NOT_AUTHORIZED, beacon.getRssi());
+                            break;
+                        case 404:
+                            fetchedBeacon = new Beacon(beacon.getType(), beacon.getId(), Beacon.Status.UNREGISTERED, beacon.getRssi());
+                            break;
+                        default:
+                            Log.e(TAG, "Unhandled beacon service response: " + response);
+                            return;
+                    }
+                    updateBeaconsList(fetchedBeacon);
+                    listener.onBeaconScanned(fetchedBeacon);
+                }
+            }, beacon.getBeaconName());
+        }
     }
 
     private void updateBeaconsList(Beacon updatedBeacon) {
