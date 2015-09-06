@@ -20,6 +20,7 @@ import android.view.View;
 import com.github.jorgecastilloprz.FABProgressCircle;
 import com.google.android.gms.common.AccountPicker;
 import com.malmstein.eddystonesample.account.AccountFragment;
+import com.malmstein.eddystonesample.account.AccountSharedPreferences;
 import com.malmstein.eddystonesample.model.Beacon;
 import com.malmstein.eddystonesample.proximitybeacon.BluetoothScanner;
 import com.malmstein.eddystonesample.proximitybeacon.ProximityBeacon;
@@ -104,19 +105,17 @@ public class EddystoneActivity extends AppCompatActivity implements BluetoothSca
         if (requestCode == REQUEST_CODE_PICK_ACCOUNT) {
             if (resultCode == Activity.RESULT_OK) {
                 String name = data.getStringExtra(AccountManager.KEY_ACCOUNT_NAME);
-                proximityBeacon = new ProximityBeaconImpl(this, name);
-
-
+                findAccountFragment().signInUser(name);
                 Snackbar.make(viewPager, getString(R.string.use_account, name), Snackbar.LENGTH_LONG).show();
             } else if (resultCode == Activity.RESULT_CANCELED) {
                 Snackbar.make(viewPager, R.string.please_pick_account, Snackbar.LENGTH_LONG).show();
             }
-            if (requestCode == REQUEST_CODE_ENABLE_BLE) {
-                if (resultCode == Activity.RESULT_OK) {
-                    scanOrRequestPermission();
-                } else if (resultCode == Activity.RESULT_CANCELED) {
-                    Snackbar.make(viewPager, R.string.bluetooth_please_enable, Snackbar.LENGTH_LONG).show();
-                }
+        }
+        if (requestCode == REQUEST_CODE_ENABLE_BLE) {
+            if (resultCode == Activity.RESULT_OK) {
+                scanOrRequestPermission();
+            } else if (resultCode == Activity.RESULT_CANCELED) {
+                Snackbar.make(viewPager, R.string.bluetooth_please_enable, Snackbar.LENGTH_LONG).show();
             }
         }
     }
@@ -135,6 +134,7 @@ public class EddystoneActivity extends AppCompatActivity implements BluetoothSca
 
     private void startScanning(BluetoothAdapter btAdapter) {
         progressCircle.show();
+        proximityBeacon = new ProximityBeaconImpl(this, AccountSharedPreferences.newInstance(this).getAccount());
         bluetoothScanner = new BluetoothScanner(proximityBeacon, this);
         bluetoothScanner.startScan(btAdapter);
         Runnable stopScanning = new Runnable() {
@@ -149,6 +149,10 @@ public class EddystoneActivity extends AppCompatActivity implements BluetoothSca
 
     private ScanFragment findScanFragment() {
         return (ScanFragment) getSupportFragmentManager().findFragmentByTag(eddystonePagerAdapter.getTag(EddystonePagerAdapter.POSITION_SCAN));
+    }
+
+    private AccountFragment findAccountFragment() {
+        return (AccountFragment) getSupportFragmentManager().findFragmentByTag(eddystonePagerAdapter.getTag(EddystonePagerAdapter.POSITION_ACCOUNT));
     }
 
     @Override
@@ -167,7 +171,7 @@ public class EddystoneActivity extends AppCompatActivity implements BluetoothSca
 
     @Override
     public void onSignOutClicked() {
-
+        proximityBeacon = null;
     }
 
 }

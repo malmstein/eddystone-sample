@@ -20,6 +20,16 @@
     android:layout_height="wrap_content"
     android:layout_gravity="center" />
 
+  <TextView
+    android:id="@+id/using_account"
+    android:padding="@dimen/card_content_padding"
+    android:textSize="16sp"
+    android:textColor="@color/grey"
+    android:text="@string/use_account"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_horizontal" />
+
   <Button
     android:id="@+id/sign_out_button"
     android:layout_width="wrap_content"
