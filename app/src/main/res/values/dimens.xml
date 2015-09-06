@@ -12,4 +12,6 @@
   <dimen name="card_corner_radius">2dp</dimen>
   <dimen name="card_content_padding">16dp</dimen>
   <dimen name="card_title_size">14sp</dimen>
+  <dimen name="card_divider_height">8dp</dimen>
+  <dimen name="card_spans_padding">8dp</dimen>
 </resources>
