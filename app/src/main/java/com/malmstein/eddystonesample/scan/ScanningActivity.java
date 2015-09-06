@@ -63,7 +63,6 @@ public class ScanningActivity extends AppCompatActivity implements BluetoothScan
     private void setupAccount() {
         accountView = Views.findById(this, R.id.accounts_view);
         accountView.setup(this);
-        proximityBeacon = new ProximityBeaconImpl(this, "");
     }
 
     @Override
@@ -73,6 +72,8 @@ public class ScanningActivity extends AppCompatActivity implements BluetoothScan
             if (resultCode == Activity.RESULT_OK) {
                 String name = data.getStringExtra(AccountManager.KEY_ACCOUNT_NAME);
                 Snackbar.make(accountView, getString(R.string.use_account, name), Snackbar.LENGTH_LONG).show();
+                proximityBeacon = new ProximityBeaconImpl(this, name);
+                showBeaconsView();
             } else if (resultCode == Activity.RESULT_CANCELED) {
                 Snackbar.make(accountView, R.string.please_pick_account, Snackbar.LENGTH_LONG).show();
             }
@@ -84,6 +85,12 @@ public class ScanningActivity extends AppCompatActivity implements BluetoothScan
                 }
             }
         }
+    }
+
+    private void showBeaconsView() {
+        accountView.setVisibility(View.GONE);
+        beaconsView.setVisibility(View.VISIBLE);
+        scanFab.show();
     }
 
     private void scanOrRequestPermission() {

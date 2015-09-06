@@ -13,4 +13,15 @@
     <item name="android:drawablePadding">@dimen/button_drawable_padding</item>
   </style>
 
+  <style name="Eddystone.Card" parent="CardView">
+    <item name="contentPadding">@dimen/card_content_padding</item>
+    <item name="cardCornerRadius">@dimen/card_corner_radius</item>
+    <item name="cardPreventCornerOverlap">false</item>
+    <item name="android:background">@drawable/shape_card_background_default</item>
+  </style>
+
+  <style name="Eddystone.CardTitle">
+    <item name="android:textSize">@dimen/card_title_size</item>
+  </style>
+
 </resources>

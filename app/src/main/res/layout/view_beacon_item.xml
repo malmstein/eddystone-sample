@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+  style="@style/Eddystone.Card"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content">
+
+  <LinearLayout
+    android:id="@+id/card_root"
+    android:background="@drawable/selector_card_clickable"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="horizontal">
+
+      <ImageView
+        android:id="@+id/beacon_item_state"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+      <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_toEndOf="@id/beacon_item_state">
+
+        <TextView
+          style="@style/Eddystone.CardTitle"
+          android:id="@+id/beacon_item_id"
+          android:text="Beacon ID"
+          android:textColor="@color/black"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content" />
+
+        <TextView
+          style="@style/Eddystone.CardTitle"
+          android:id="@+id/beacon_item_status"
+          android:text="STATUS"
+          android:textColor="@color/black"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content" />
+
+      </LinearLayout>
+
+    </LinearLayout>
+
+    <TextView
+      android:id="@+id/beacon_item_attachments"
+      style="@style/Eddystone.Button"
+      android:background="@drawable/selector_card_button"
+      android:text="View attachments"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content" />
+
+  </LinearLayout>
+
+</android.support.v7.widget.CardView>

@@ -14,6 +14,7 @@ public class BeaconsView extends FrameLayout {
 
     private static final String TAG = BeaconsView.class.getSimpleName();
 
+    private BeaconArrayAdapter arrayAdapter;
     private RecyclerView beaconsList;
 
     public BeaconsView(Context context) {
@@ -34,6 +35,7 @@ public class BeaconsView extends FrameLayout {
 
         LayoutInflater.from(getContext()).inflate(R.layout.view_beacons, this, true);
         beaconsList = Views.findById(this, R.id.beacons_list);
+        arrayAdapter = new BeaconArrayAdapter(getContext(), R.layout.beacon_list_item, arrayList);
     }
 
     public void updateWith(Beacon beacon) {

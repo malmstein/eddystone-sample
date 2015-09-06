@@ -8,7 +8,8 @@
 
   <color name="black">#000000</color>
 
-
-
+  <color name="card_background">#F6F6EF</color>
+  <color name="card_pressed">#83d9af</color>
+  <color name="button_pressed">#9e9e9e</color>
 
 </resources>

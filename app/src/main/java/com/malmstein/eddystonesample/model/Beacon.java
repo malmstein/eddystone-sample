@@ -156,8 +156,12 @@ public class Beacon {
         return type;
     }
 
-    public int getRssi(){
+    public int getRssi() {
         return rssi;
+    }
+
+    public Status getStatus() {
+        return status;
     }
 
     public static Beacon from(byte[] id, int rssi) {
