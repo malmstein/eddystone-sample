@@ -19,15 +19,14 @@ import android.view.View;
 
 import com.github.jorgecastilloprz.FABProgressCircle;
 import com.google.android.gms.common.AccountPicker;
-import com.malmstein.eddystonesample.account.AccountView;
+import com.malmstein.eddystonesample.account.AccountFragment;
 import com.malmstein.eddystonesample.model.Beacon;
 import com.malmstein.eddystonesample.proximitybeacon.BluetoothScanner;
 import com.malmstein.eddystonesample.proximitybeacon.ProximityBeacon;
 import com.malmstein.eddystonesample.proximitybeacon.ProximityBeaconImpl;
-import com.malmstein.eddystonesample.scan.BeaconsView;
 import com.novoda.notils.caster.Views;
 
-public class EddystoneActivity extends AppCompatActivity implements BluetoothScanner.Listener, AccountView.Listener {
+public class EddystoneActivity extends AppCompatActivity implements BluetoothScanner.Listener, AccountFragment.Listener {
 
     static final int REQUEST_CODE_PICK_ACCOUNT = 1000;
     static final int REQUEST_CODE_ENABLE_BLE = 1001;
@@ -38,8 +37,6 @@ public class EddystoneActivity extends AppCompatActivity implements BluetoothSca
     private ProximityBeacon proximityBeacon;
     private BluetoothScanner bluetoothScanner;
 
-    private AccountView accountView;
-    private BeaconsView beaconsView;
     private FloatingActionButton scanFab;
     private FABProgressCircle progressCircle;
 
@@ -51,7 +48,6 @@ public class EddystoneActivity extends AppCompatActivity implements BluetoothSca
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scanning);
 
-//        beaconsView = Views.findById(this, R.id.beacons_view);
         scanFab = Views.findById(this, R.id.action_scan);
         progressCircle = Views.findById(this, R.id.action_scan_progress_circle);
 
@@ -59,7 +55,6 @@ public class EddystoneActivity extends AppCompatActivity implements BluetoothSca
         setupHeaders();
         setupTabs();
         setupActions();
-//        setupAccount();
     }
 
     private void setupActions() {
@@ -81,6 +76,19 @@ public class EddystoneActivity extends AppCompatActivity implements BluetoothSca
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         eddystonePagerAdapter = new EddystonePagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(eddystonePagerAdapter);
+        viewPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+
+            @Override
+            public void onPageSelected(int position) {
+                if (position == 1) {
+                    scanFab.show();
+                } else {
+                    scanFab.hide();
+                }
+
+            }
+
+        });
     }
 
     private void setupTabs() {
@@ -89,37 +97,25 @@ public class EddystoneActivity extends AppCompatActivity implements BluetoothSca
         tabLayout.setupWithViewPager(viewPager);
     }
 
-    private void setupAccount() {
-//        accountView = Views.findById(this, R.id.accounts_view);
-//        accountView.setup(this);
-    }
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_CODE_PICK_ACCOUNT) {
             if (resultCode == Activity.RESULT_OK) {
                 String name = data.getStringExtra(AccountManager.KEY_ACCOUNT_NAME);
-                Snackbar.make(accountView, getString(R.string.use_account, name), Snackbar.LENGTH_LONG).show();
+                Snackbar.make(viewPager, getString(R.string.use_account, name), Snackbar.LENGTH_LONG).show();
                 proximityBeacon = new ProximityBeaconImpl(this, name);
-                showBeaconsView();
             } else if (resultCode == Activity.RESULT_CANCELED) {
-                Snackbar.make(accountView, R.string.please_pick_account, Snackbar.LENGTH_LONG).show();
+                Snackbar.make(viewPager, R.string.please_pick_account, Snackbar.LENGTH_LONG).show();
             }
             if (requestCode == REQUEST_CODE_ENABLE_BLE) {
                 if (resultCode == Activity.RESULT_OK) {
                     scanOrRequestPermission();
                 } else if (resultCode == Activity.RESULT_CANCELED) {
-                    Snackbar.make(beaconsView, R.string.bluetooth_please_enable, Snackbar.LENGTH_LONG).show();
+                    Snackbar.make(viewPager, R.string.bluetooth_please_enable, Snackbar.LENGTH_LONG).show();
                 }
             }
         }
-    }
-
-    private void showBeaconsView() {
-        accountView.setVisibility(View.GONE);
-        beaconsView.setVisibility(View.VISIBLE);
-        scanFab.show();
     }
 
     private void scanOrRequestPermission() {
@@ -150,7 +146,7 @@ public class EddystoneActivity extends AppCompatActivity implements BluetoothSca
 
     @Override
     public void onBeaconScanned(Beacon fetchedBeacon) {
-        beaconsView.updateWith(fetchedBeacon);
+//        beaconsView.updateWith(fetchedBeacon);
     }
 
     @Override
