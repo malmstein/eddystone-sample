@@ -24,6 +24,7 @@ import com.malmstein.eddystonesample.model.Beacon;
 import com.malmstein.eddystonesample.proximitybeacon.BluetoothScanner;
 import com.malmstein.eddystonesample.proximitybeacon.ProximityBeacon;
 import com.malmstein.eddystonesample.proximitybeacon.ProximityBeaconImpl;
+import com.malmstein.eddystonesample.scan.ScanFragment;
 import com.novoda.notils.caster.Views;
 
 public class EddystoneActivity extends AppCompatActivity implements BluetoothScanner.Listener, AccountFragment.Listener {
@@ -144,9 +145,14 @@ public class EddystoneActivity extends AppCompatActivity implements BluetoothSca
         handler.postDelayed(stopScanning, SCAN_TIME_MILLIS);
     }
 
+    private ScanFragment findScanFragment() {
+        return (ScanFragment) getSupportFragmentManager().findFragmentByTag(eddystonePagerAdapter.getTag(EddystonePagerAdapter.POSITION_SCAN));
+    }
+
     @Override
     public void onBeaconScanned(Beacon fetchedBeacon) {
-//        beaconsView.updateWith(fetchedBeacon);
+        ScanFragment scanFragment = findScanFragment();
+        scanFragment.updateWith(fetchedBeacon);
     }
 
     @Override
