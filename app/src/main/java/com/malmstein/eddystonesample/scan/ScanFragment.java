@@ -38,4 +38,7 @@ public class ScanFragment extends Fragment {
         beaconsAdapter.updateWith(beacon);
     }
 
+    public void reset() {
+        beaconsAdapter.clear();
+    }
 }

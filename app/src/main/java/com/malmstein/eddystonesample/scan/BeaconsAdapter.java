@@ -126,6 +126,11 @@ public class BeaconsAdapter extends RecyclerView.Adapter<BeaconsAdapter.ViewHold
         }
     }
 
+    public void clear() {
+        beacons.clear();
+        notifyDataSetChanged();
+    }
+
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public ImageView registrationStatus;
         public TextView beaconId;

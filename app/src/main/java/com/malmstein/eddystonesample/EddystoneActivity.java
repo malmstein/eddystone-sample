@@ -133,6 +133,10 @@ public class EddystoneActivity extends AppCompatActivity implements BluetoothSca
     }
 
     private void startScanning(BluetoothAdapter btAdapter) {
+
+        ScanFragment scanFragment = findScanFragment();
+        scanFragment.reset();
+
         progressCircle.show();
         proximityBeacon = new ProximityBeaconImpl(this, AccountSharedPreferences.newInstance(this).getAccount());
         bluetoothScanner = new BluetoothScanner(proximityBeacon, this);
