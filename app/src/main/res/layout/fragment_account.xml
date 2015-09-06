@@ -2,14 +2,30 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
   android:orientation="vertical"
   android:layout_width="match_parent"
-  android:layout_height="match_parent">
+  android:layout_height="match_parent"
+  android:gravity="top">
 
   <TextView
     android:id="@+id/choose_account"
-    style="@style/Eddystone.Button"
+    android:padding="@dimen/card_content_padding"
+    android:textSize="16sp"
+    android:textColor="@color/grey"
     android:text="@string/choose_account"
     android:layout_width="wrap_content"
+    android:layout_height="wrap_content" />
+
+  <com.google.android.gms.common.SignInButton
+    android:id="@+id/sign_in_button"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:drawableEnd="@drawable/ic_account_circle" />
+    android:layout_gravity="center" />
+
+  <Button
+    android:id="@+id/sign_out_button"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="Disconnect"
+    android:layout_gravity="center"/>
+
 
 </LinearLayout>

@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 
 import com.malmstein.eddystonesample.R;
 import com.malmstein.eddystonesample.model.Beacon;
-import com.malmstein.eddystonesample.view.SimpleDividerItemDecoration;
 import com.novoda.notils.caster.Views;
 
 import java.util.ArrayList;

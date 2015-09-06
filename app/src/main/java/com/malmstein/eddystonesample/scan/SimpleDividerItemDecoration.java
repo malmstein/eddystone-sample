@@ -1,4 +1,4 @@
-package com.malmstein.eddystonesample.view;
+package com.malmstein.eddystonesample.scan;
 
 import android.content.Context;
 import android.graphics.Canvas;

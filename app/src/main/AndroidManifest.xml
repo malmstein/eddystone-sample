@@ -10,6 +10,15 @@
     android:icon="@mipmap/ic_launcher"
     android:label="@string/app_name"
     android:theme="@style/Eddystone">
+
+    <meta-data
+      android:name="com.google.android.geo.API_KEY"
+      android:value="AIzaSyDdeTxQHCbNSQUW5-t2UQbqtlskm50n3lg" />
+
+    <meta-data
+      android:name="com.google.android.nearby.messages.API_KEY"
+      android:value="AIzaSyDdeTxQHCbNSQUW5-t2UQbqtlskm50n3lg" />
+
     <activity
       android:name=".EddystoneActivity"
       android:label="@string/app_name"

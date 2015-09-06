@@ -104,8 +104,10 @@ public class EddystoneActivity extends AppCompatActivity implements BluetoothSca
         if (requestCode == REQUEST_CODE_PICK_ACCOUNT) {
             if (resultCode == Activity.RESULT_OK) {
                 String name = data.getStringExtra(AccountManager.KEY_ACCOUNT_NAME);
-                Snackbar.make(viewPager, getString(R.string.use_account, name), Snackbar.LENGTH_LONG).show();
                 proximityBeacon = new ProximityBeaconImpl(this, name);
+
+
+                Snackbar.make(viewPager, getString(R.string.use_account, name), Snackbar.LENGTH_LONG).show();
             } else if (resultCode == Activity.RESULT_CANCELED) {
                 Snackbar.make(viewPager, R.string.please_pick_account, Snackbar.LENGTH_LONG).show();
             }
@@ -156,10 +158,16 @@ public class EddystoneActivity extends AppCompatActivity implements BluetoothSca
     }
 
     @Override
-    public void onAccountSelectorClicked() {
+    public void onSignInClicked() {
         String[] accountTypes = new String[]{"com.google"};
         Intent intent = AccountPicker.newChooseAccountIntent(
                 null, null, accountTypes, false, null, null, null, null);
         startActivityForResult(intent, REQUEST_CODE_PICK_ACCOUNT);
     }
+
+    @Override
+    public void onSignOutClicked() {
+
+    }
+
 }
