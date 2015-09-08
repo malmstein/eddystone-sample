@@ -87,9 +87,7 @@ public class EddystoneActivity extends AppCompatActivity implements BluetoothSca
                 } else {
                     scanFab.hide();
                 }
-
             }
-
         });
     }
 

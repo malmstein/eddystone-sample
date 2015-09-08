@@ -74,6 +74,7 @@ public class AccountFragment extends Fragment {
     }
 
     public void signInUser(String accountName) {
+        new AccountAuthorizationTask(getActivity(), accountName).execute();
         accountSharedPreferences.saveAccount(accountName);
         showLoggedInUI();
     }
