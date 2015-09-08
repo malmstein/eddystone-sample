@@ -3,6 +3,9 @@ package com.malmstein.eddystonesample.manage;
 import android.content.Context;
 import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
+import android.view.LayoutInflater;
+
+import com.malmstein.eddystonesample.R;
 
 public class BeaconInfoView extends CardView {
 
@@ -18,4 +21,10 @@ public class BeaconInfoView extends CardView {
         super(context, attrs, defStyleAttr);
     }
 
+    @Override
+    protected void onFinishInflate() {
+        super.onFinishInflate();
+        LayoutInflater.from(getContext()).inflate(R.layout.view_beacon_info, null);
+
+    }
 }
