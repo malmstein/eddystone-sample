@@ -32,19 +32,6 @@
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-  <!--<com.malmstein.eddystonesample.scan.AccountView-->
-    <!--app:layout_behavior="@string/appbar_scrolling_view_behavior"-->
-    <!--android:id="@+id/accounts_view"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="match_parent" />-->
-
-  <!--<com.malmstein.eddystonesample.scan.BeaconsView-->
-    <!--app:layout_behavior="@string/appbar_scrolling_view_behavior"-->
-    <!--android:id="@+id/beacons_view"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="match_parent"-->
-    <!--android:visibility="gone" />-->
-
   <com.github.jorgecastilloprz.FABProgressCircle
     android:id="@+id/action_scan_progress_circle"
     android:layout_width="wrap_content"
