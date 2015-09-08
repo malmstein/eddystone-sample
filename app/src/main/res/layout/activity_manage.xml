@@ -30,6 +30,16 @@
       android:orientation="vertical"
       android:paddingTop="24dp">
 
+      <com.malmstein.eddystonesample.manage.BeaconInfoView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/card_content_padding" />
+
+      <com.malmstein.eddystonesample.manage.BeaconAttachmentsView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/card_content_padding" />
+
     </LinearLayout>
 
   </android.support.v4.widget.NestedScrollView>
