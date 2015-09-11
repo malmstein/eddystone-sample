@@ -27,15 +27,16 @@
     <LinearLayout
       android:layout_width="match_parent"
       android:layout_height="match_parent"
-      android:orientation="vertical"
-      android:paddingTop="24dp">
+      android:orientation="vertical">
 
       <com.malmstein.eddystonesample.manage.BeaconInfoView
+        android:id="@+id/beacon_info_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/card_content_padding" />
 
       <com.malmstein.eddystonesample.manage.BeaconAttachmentsView
+        android:id="@+id/beacon_attachments_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/card_content_padding" />

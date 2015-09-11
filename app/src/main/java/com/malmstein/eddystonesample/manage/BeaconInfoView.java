@@ -4,10 +4,20 @@ import android.content.Context;
 import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.widget.TextView;
 
 import com.malmstein.eddystonesample.R;
+import com.malmstein.eddystonesample.model.Beacon;
+import com.novoda.notils.caster.Views;
 
 public class BeaconInfoView extends CardView {
+
+    private TextView beaconType;
+    private TextView beaconId;
+    private TextView beaconStatus;
+    private TextView beaconPlace;
+    private TextView beaconStability;
+    private TextView beaconDescription;
 
     public BeaconInfoView(Context context) {
         super(context);
@@ -24,7 +34,22 @@ public class BeaconInfoView extends CardView {
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
-        LayoutInflater.from(getContext()).inflate(R.layout.view_beacon_info, null);
+        LayoutInflater.from(getContext()).inflate(R.layout.view_beacon_info, this, true);
 
+        beaconType = Views.findById(this, R.id.beacon_info_type);
+        beaconId = Views.findById(this, R.id.beacon_info_id);
+        beaconStatus = Views.findById(this, R.id.beacon_info_status);
+        beaconPlace = Views.findById(this, R.id.beacon_info_place_id);
+        beaconStability = Views.findById(this, R.id.beacon_info_stability);
+        beaconDescription = Views.findById(this, R.id.beacon_info_description);
+    }
+
+    public void updateWith(Beacon beacon) {
+        beaconType.setText(beacon.getType());
+        beaconId.setText(beacon.getHexId());
+        beaconStatus.setText(beacon.getStatus().name());
+        beaconPlace.setText(beacon.getPlaceId());
+        beaconStability.setText(beacon.getExpectedStability());
+        beaconDescription.setText(beacon.getDescription());
     }
 }

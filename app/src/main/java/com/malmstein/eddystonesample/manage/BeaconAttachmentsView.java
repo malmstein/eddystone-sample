@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.widget.FrameLayout;
 
 import com.malmstein.eddystonesample.R;
+import com.malmstein.eddystonesample.model.Beacon;
 
 public class BeaconAttachmentsView extends FrameLayout {
 
@@ -24,8 +25,10 @@ public class BeaconAttachmentsView extends FrameLayout {
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
-        LayoutInflater.from(getContext()).inflate(R.layout.view_beacon_attachments, null);
-
+        LayoutInflater.from(getContext()).inflate(R.layout.view_beacon_attachments, this, true);
     }
 
+    public void updateWith(Beacon beacon) {
+
+    }
 }

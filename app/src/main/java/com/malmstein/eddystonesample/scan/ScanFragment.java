@@ -47,7 +47,7 @@ public class ScanFragment extends Fragment implements BeaconsAdapter.Listener {
     @Override
     public void onBeaconClicked(Beacon beacon) {
         Intent manageBeaon = new Intent(getActivity(), ManageBeaconActivity.class);
-        manageBeaon.putExtra("beacon", beacon);
+        manageBeaon.putExtra(ManageBeaconActivity.KEY_BEACON, beacon);
         startActivity(manageBeaon);
     }
 }

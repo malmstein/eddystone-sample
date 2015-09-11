@@ -24,7 +24,7 @@ import java.io.Serializable;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class Beacon implements Serializable{
+public class Beacon implements Serializable {
 
     public enum Status {
         UNSPECIFIED,
@@ -170,8 +170,16 @@ public class Beacon implements Serializable{
         return new Beacon("EDDYSTONE", id, Beacon.Status.UNSPECIFIED, rssi);
     }
 
-    public String getDescription(){
+    public String getDescription() {
         return description;
+    }
+
+    public String getExpectedStability() {
+        return expectedStability;
+    }
+
+    public String getPlaceId(){
+        return placeId;
     }
 
 }
