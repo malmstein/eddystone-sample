@@ -1,6 +1,9 @@
 <resources>
   <string name="app_name">EddystoneSample</string>
+
   <string name="activity_scanning">Eddystone Sample</string>
+  <string name="activity_manage">Manage Beacon</string>
+
   <string name="bluetooth_please_enable">Please enable Bluetooth</string>
 
   <string name="choose_account">In order to manage your beacons it is needed to Sign in with your Google account.\r\nYou can still scan beacons but you won\'t be able to register them or modify any of their properties</string>
@@ -8,6 +11,7 @@
   <string name="please_pick_account">Please pick an account</string>
 
   <string name="hint_description">Description of the beacon</string>
+
   <string name="action_deactivate">Deactivate</string>
   <string name="action_add_attachment">Add attachment</string>
   <string name="action_disconnect">Disconnect</string>
