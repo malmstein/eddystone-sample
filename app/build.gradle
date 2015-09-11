@@ -1,5 +1,9 @@
 apply plugin: 'com.android.application'
 
+Properties props = new Properties()
+File propsFile = new File('app/signing.properties')
+props.load(propsFile.newDataInputStream())
+
 android {
     compileSdkVersion 23
     buildToolsVersion "23.0.0"
@@ -15,9 +19,9 @@ android {
     signingConfigs {
         eddystone {
             storeFile file("../beacons.keystore")
-            storePassword 'jeremias'
-            keyAlias 'beacons'
-            keyPassword 'jeremias'
+            storePassword props.getProperty('signing.storePassword')
+            keyAlias props.getProperty('signing.keyAlias')
+            keyPassword props.getProperty('signing.keyPassword')
         }
     }
 
