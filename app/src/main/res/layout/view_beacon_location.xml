@@ -25,7 +25,7 @@
   <TextView
     style="@style/Eddystone.Subhead"
     android:id="@+id/beacon_info_place_id"
-    android:text="Place Id"
+    android:text="@string/tap_map_to_add_location"
     android:textColor="@color/grey"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
@@ -34,7 +34,6 @@
   <TextView
     style="@style/Eddystone.Subhead"
     android:id="@+id/beacon_info_coordinates"
-    android:text="Lat Lng"
     android:textColor="@color/grey"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"

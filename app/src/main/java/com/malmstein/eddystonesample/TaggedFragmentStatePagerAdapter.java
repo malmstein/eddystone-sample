@@ -14,7 +14,6 @@ import java.util.ArrayList;
 
 public abstract class TaggedFragmentStatePagerAdapter extends PagerAdapter {
     private static final String TAG = "FragmentStatePagerAdapter";
-    private static final boolean DEBUG = false;
 
     private final FragmentManager mFragmentManager;
     private FragmentTransaction mCurTransaction = null;
@@ -54,9 +53,6 @@ public abstract class TaggedFragmentStatePagerAdapter extends PagerAdapter {
         }
 
         Fragment fragment = getItem(position);
-        if (DEBUG) {
-            Log.v(TAG, "Adding item #" + position + ": f=" + fragment);
-        }
         if (mSavedState.size() > position) {
             Fragment.SavedState fss = mSavedState.get(position);
             if (fss != null) {
@@ -80,10 +76,6 @@ public abstract class TaggedFragmentStatePagerAdapter extends PagerAdapter {
 
         if (mCurTransaction == null) {
             mCurTransaction = mFragmentManager.beginTransaction();
-        }
-        if (DEBUG) {
-            Log.v(TAG, "Removing item #" + position + ": f=" + object
-                    + " v=" + ((Fragment) object).getView());
         }
         while (mSavedState.size() <= position) {
             mSavedState.add(null);

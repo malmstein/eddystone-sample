@@ -16,6 +16,7 @@ package com.malmstein.eddystonesample.model;
 
 import android.support.annotation.Nullable;
 
+import com.google.android.gms.location.places.Place;
 import com.google.android.gms.maps.model.LatLng;
 import com.malmstein.eddystonesample.StringUtils;
 
@@ -53,6 +54,18 @@ public class Beacon implements Serializable {
         this.placeId = null;
         this.latitude = null;
         this.longitude = null;
+        this.expectedStability = null;
+        this.description = null;
+        this.rssi = rssi;
+    }
+
+    public Beacon(String type, byte[] id, Status status, int rssi, Place place) {
+        this.type = type;
+        this.id = id;
+        this.status = status;
+        this.placeId = place.getId();
+        this.latitude = place.getLatLng().latitude;
+        this.longitude = place.getLatLng().longitude;
         this.expectedStability = null;
         this.description = null;
         this.rssi = rssi;
@@ -178,8 +191,14 @@ public class Beacon implements Serializable {
         return expectedStability;
     }
 
-    public String getPlaceId(){
+    public String getPlaceId() {
         return placeId;
+    }
+
+    public void setPlace(Place place) {
+        placeId = place.getId();
+        latitude = place.getLatLng().latitude;
+        longitude = place.getLatLng().longitude;
     }
 
 }

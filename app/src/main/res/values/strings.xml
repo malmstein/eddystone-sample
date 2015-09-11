@@ -20,4 +20,6 @@
   <string name="title_location">Location</string>
   <string name="title_attachments">Attachments</string>
 
+  <string name="tap_map_to_add_location">Tap on the map to set the Beacon\'s location </string>
+
 </resources>

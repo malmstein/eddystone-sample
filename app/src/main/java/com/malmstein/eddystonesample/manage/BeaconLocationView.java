@@ -45,8 +45,12 @@ public class BeaconLocationView extends CardView {
 
     public void updateWith(Beacon beacon, Listener listener) {
         this.listener = listener;
-        beaconPlace.setText(beacon.getPlaceId());
-        beaconCoordinates.setText(beacon.getLatLng().toString());
+        if (beacon.getPlaceId() != null) {
+            beaconPlace.setText(beacon.getPlaceId());
+        }
+        if (beacon.getLatLng() != null) {
+            beaconCoordinates.setText(beacon.getLatLng().toString());
+        }
 
         bindMap(beacon);
     }
