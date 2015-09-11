@@ -79,12 +79,6 @@ public class BeaconLocationView extends CardView {
         beaconPlace.setText(place.getId());
         beaconCoordinates.setText(place.getLatLng().toString());
         updateStaticMapPicture(place.getLatLng());
-
-//        LatLng placeLatLng = place.getLatLng();
-//        bel.setText(placeLatLng.toString());
-//        beacon.latitude = placeLatLng.latitude;
-//        beacon.longitude = placeLatLng.longitude;
-//        updateBeacon();
     }
 
     public interface Listener {
