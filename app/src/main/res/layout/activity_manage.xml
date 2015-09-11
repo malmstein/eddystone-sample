@@ -35,6 +35,12 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/card_content_padding" />
 
+      <com.malmstein.eddystonesample.manage.BeaconLocationView
+        android:id="@+id/beacon_location_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/card_content_padding" />
+
       <com.malmstein.eddystonesample.manage.BeaconAttachmentsView
         android:id="@+id/beacon_attachments_view"
         android:layout_width="match_parent"
@@ -44,7 +50,6 @@
     </LinearLayout>
 
   </android.support.v4.widget.NestedScrollView>
-
 
 </android.support.design.widget.CoordinatorLayout>
 

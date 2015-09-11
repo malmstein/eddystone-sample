@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  android:id="@+id/beacon_item_root"
+  android:background="@drawable/selector_card_clickable"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:orientation="vertical"
+  android:padding="@dimen/card_content_padding">
+
+  <TextView
+    style="@style/Eddystone.Title"
+    android:text="@string/title_location"
+    android:textColor="@color/black"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content" />
+
+  <ImageView
+    android:id="@+id/beacon_info_map"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/beacon_map_height"
+    android:layout_marginTop="@dimen/card_inset_padding" />
+
+  <TextView
+    style="@style/Eddystone.Subhead"
+    android:id="@+id/beacon_info_place_id"
+    android:text="Place Id"
+    android:textColor="@color/grey"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/card_inset_padding" />
+
+  <TextView
+    style="@style/Eddystone.Subhead"
+    android:id="@+id/beacon_info_coordinates"
+    android:text="Lat Lng"
+    android:textColor="@color/grey"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/card_inset_padding" />
+
+</LinearLayout>

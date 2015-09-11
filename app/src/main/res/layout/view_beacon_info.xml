@@ -11,7 +11,7 @@
 
   <TextView
     style="@style/Eddystone.Title"
-    android:text="Details"
+    android:text="@string/title_details"
     android:textColor="@color/black"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content" />
@@ -68,30 +68,6 @@
       android:layout_height="wrap_content" />
 
   </android.support.design.widget.TextInputLayout>
-
-  <ImageView
-    android:id="@+id/beacon_info_map"
-    android:layout_width="match_parent"
-    android:layout_height="@dimen/beacon_map_height"
-    android:layout_marginTop="@dimen/card_inset_padding" />
-
-  <TextView
-    style="@style/Eddystone.Subhead"
-    android:id="@+id/beacon_info_place_id"
-    android:text="Place Id"
-    android:textColor="@color/grey"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="@dimen/card_inset_padding" />
-
-  <TextView
-    style="@style/Eddystone.Subhead"
-    android:id="@+id/beacon_info_coordinates"
-    android:text="Lat Lng"
-    android:textColor="@color/grey"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="@dimen/card_inset_padding" />
 
   <TextView
     android:id="@+id/beacon_info_deactivate"

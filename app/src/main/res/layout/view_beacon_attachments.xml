@@ -10,7 +10,7 @@
 
   <TextView
     style="@style/Eddystone.Title"
-    android:text="Attachments"
+    android:text="@string/title_attachments"
     android:textColor="@color/black"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content" />

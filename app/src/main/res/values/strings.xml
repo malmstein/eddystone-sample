@@ -16,4 +16,8 @@
   <string name="action_add_attachment">Add attachment</string>
   <string name="action_disconnect">Disconnect</string>
 
+  <string name="title_details">Details</string>
+  <string name="title_location">Location</string>
+  <string name="title_attachments">Attachments</string>
+
 </resources>

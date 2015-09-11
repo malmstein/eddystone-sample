@@ -19,7 +19,7 @@ import com.malmstein.eddystonesample.model.Beacon;
 import com.malmstein.eddystonesample.proximitybeacon.ProximityBeaconImpl;
 import com.novoda.notils.caster.Views;
 
-public class ManageBeaconActivity extends AppCompatActivity implements BeaconInfoView.Listener {
+public class ManageBeaconActivity extends AppCompatActivity implements BeaconLocationView.Listener {
 
     public static final String KEY_BEACON = BuildConfig.APPLICATION_ID + "EXTRA_BEACON";
 
@@ -27,6 +27,7 @@ public class ManageBeaconActivity extends AppCompatActivity implements BeaconInf
 
     private BeaconInfoView beaconInfoView;
     private BeaconAttachmentsView beaconAttachmentsView;
+    private BeaconLocationView beaconLocationView;
     private ProximityBeaconImpl proximityBeacon;
 
     private Beacon getBeacon() {
@@ -42,6 +43,7 @@ public class ManageBeaconActivity extends AppCompatActivity implements BeaconInf
 
         beaconInfoView = Views.findById(this, R.id.beacon_info_view);
         beaconAttachmentsView = Views.findById(this, R.id.beacon_attachments_view);
+        beaconLocationView = Views.findById(this, R.id.beacon_location_view);
     }
 
     @Override
@@ -49,7 +51,7 @@ public class ManageBeaconActivity extends AppCompatActivity implements BeaconInf
         if (requestCode == REQUEST_CODE_PLACE_PICKER) {
             if (resultCode == Activity.RESULT_OK) {
                 Place place = PlacePicker.getPlace(data, this);
-                beaconInfoView.addPlace(place);
+                beaconLocationView.addPlace(place);
             }
         }
     }
@@ -66,7 +68,8 @@ public class ManageBeaconActivity extends AppCompatActivity implements BeaconInf
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
         proximityBeacon = new ProximityBeaconImpl(this, AccountSharedPreferences.newInstance(this).getAccount());
-        beaconInfoView.updateWith(getBeacon(), this);
+        beaconInfoView.updateWith(getBeacon());
+        beaconLocationView.updateWith(getBeacon(), this);
         beaconAttachmentsView.updateWith(getBeacon());
         fetchNamespace();
     }
