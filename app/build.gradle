@@ -11,11 +11,29 @@ android {
         versionCode 1
         versionName "1.0"
     }
+
+    signingConfigs {
+        eddystone {
+            storeFile file("../beacons.keystore")
+            storePassword 'jeremias'
+            keyAlias 'beacons'
+            keyPassword 'jeremias'
+        }
+    }
+
     buildTypes {
         release {
+            debuggable true
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+
+    productFlavors {
+        alpha {
+            signingConfig signingConfigs.eddystone
+        }
+
     }
 }
 

@@ -9,7 +9,7 @@
   android:padding="@dimen/card_content_padding">
 
   <TextView
-    style="@style/Eddystone.CardTitle"
+    style="@style/Eddystone.Subhead"
     android:id="@+id/beacon_info_type"
     android:text="Eddystone"
     android:textColor="@color/black"
@@ -17,7 +17,7 @@
     android:layout_height="wrap_content" />
 
   <TextView
-    style="@style/Eddystone.CardTitle"
+    style="@style/Eddystone.Subhead"
     android:id="@+id/beacon_info_id"
     android:text="1123123n12k3n1lkn123"
     android:textColor="@color/black"
@@ -26,7 +26,7 @@
     android:paddingTop="@dimen/card_content_padding"/>
 
   <TextView
-    style="@style/Eddystone.CardTitle"
+    style="@style/Eddystone.Subhead"
     android:id="@+id/beacon_info_status"
     android:text="Status"
     android:textColor="@color/black"
@@ -35,7 +35,7 @@
     android:paddingTop="@dimen/card_content_padding"/>
 
   <TextView
-    style="@style/Eddystone.CardTitle"
+    style="@style/Eddystone.Subhead"
     android:id="@+id/beacon_info_place_id"
     android:text="Place Id"
     android:textColor="@color/black"
@@ -44,7 +44,7 @@
     android:paddingTop="@dimen/card_content_padding"/>
 
   <TextView
-    style="@style/Eddystone.CardTitle"
+    style="@style/Eddystone.Subhead"
     android:id="@+id/beacon_info_stability"
     android:text="Stability"
     android:textColor="@color/black"
@@ -53,7 +53,7 @@
     android:paddingTop="@dimen/card_content_padding"/>
 
   <TextView
-    style="@style/Eddystone.CardTitle"
+    style="@style/Eddystone.Subhead"
     android:id="@+id/beacon_info_description"
     android:text="Description"
     android:textColor="@color/black"

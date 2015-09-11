@@ -5,34 +5,42 @@
   android:background="@drawable/selector_card_clickable"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
-  android:orientation="horizontal"
+  android:orientation="vertical"
   android:padding="@dimen/card_content_padding">
 
-  <ImageView
-    android:id="@+id/beacon_item_state"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:src="@drawable/ic_action_help"/>
+  <TextView
+    style="@style/Eddystone.Subhead"
+    android:id="@+id/beacon_item_id"
+    android:text="Beacon ID"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" />
+
+  <TextView
+    style="@style/Eddystone.Subhead"
+    android:id="@+id/beacon_item_description"
+    android:text="Beacon description"
+    android:paddingTop="@dimen/card_inset_padding"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" />
 
   <LinearLayout
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:paddingStart="@dimen/card_content_padding">
+    android:paddingTop="@dimen/card_inset_padding"
+    android:layout_gravity="left|center"
+    android:orientation="horizontal">
 
-    <TextView
-      style="@style/Eddystone.CardTitle"
-      android:id="@+id/beacon_item_id"
-      android:text="Beacon ID"
-      android:textColor="@color/black"
+    <ImageView
+      android:id="@+id/beacon_item_state"
       android:layout_width="wrap_content"
-      android:layout_height="wrap_content" />
+      android:layout_height="wrap_content"
+      android:src="@drawable/ic_action_help"/>
 
     <TextView
-      style="@style/Eddystone.CardTitle"
+      style="@style/Eddystone.Body1"
       android:id="@+id/beacon_item_status"
+      android:paddingStart="@dimen/card_inset_padding"
       android:text="STATUS"
-      android:textColor="@color/black"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content" />
 

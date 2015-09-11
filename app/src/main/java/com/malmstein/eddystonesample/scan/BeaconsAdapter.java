@@ -53,46 +53,60 @@ public class BeaconsAdapter extends RecyclerView.Adapter<BeaconsAdapter.ViewHold
     @Override
     public void onBindViewHolder(BeaconsAdapter.ViewHolder holder, int position) {
         final Beacon beacon = beacons.get(position);
+        bindText(holder, beacon);
+        bindIcon(holder, beacon);
+    }
 
+    private void bindText(ViewHolder holder, Beacon beacon) {
         holder.beaconId.setText(beacon.getHexId());
+        holder.beaconDescription.setText(beacon.getDescription());
         holder.beaconStatus.setText(beacon.getStatus().name());
+    }
+
+    private void bindIcon(ViewHolder holder, Beacon beacon) {
         switch (beacon.getStatus()) {
             case UNREGISTERED:
                 holder.registrationStatus.setImageResource(R.drawable.ic_action_lock_open);
                 holder.registrationStatus.setColorFilter(BLACK);
-                holder.beaconId.setTextColor(BLACK);
+                bindColorFilter(holder, BLACK);
                 break;
-            case STATUS_ACTIVE:
+            case ACTIVE:
                 holder.registrationStatus.setImageResource(R.drawable.ic_action_check_circle);
                 holder.registrationStatus.setColorFilter(GREEN);
-                holder.beaconId.setTextColor(BLACK);
+                bindColorFilter(holder, BLACK);
                 break;
-            case STATUS_INACTIVE:
+            case INACTIVE:
                 holder.registrationStatus.setImageResource(R.drawable.ic_action_check_circle);
                 holder.registrationStatus.setColorFilter(ORANGE);
-                holder.beaconId.setTextColor(BLACK);
+                bindColorFilter(holder, BLACK);
                 break;
-            case STATUS_DECOMMISSIONED:
+            case DECOMMISSIONED:
                 holder.registrationStatus.setImageResource(R.drawable.ic_action_highlight_off);
                 holder.registrationStatus.setColorFilter(RED);
-                holder.beaconId.setTextColor(GREY);
+                bindColorFilter(holder, GREY);
                 break;
             case NOT_AUTHORIZED:
                 holder.registrationStatus.setImageResource(R.drawable.ic_action_lock);
                 holder.registrationStatus.setColorFilter(GREY);
-                holder.beaconId.setTextColor(GREY);
+                bindColorFilter(holder, GREY);
                 break;
-            case STATUS_UNSPECIFIED:
+            case UNSPECIFIED:
                 holder.registrationStatus.setImageResource(R.drawable.ic_action_help);
                 holder.registrationStatus.setColorFilter(GREY);
-                holder.beaconId.setTextColor(GREY);
+                bindColorFilter(holder, GREY);
                 break;
             default:
                 holder.registrationStatus.setImageResource(R.drawable.ic_action_help);
                 holder.registrationStatus.setColorFilter(BLACK);
-                holder.beaconId.setTextColor(BLACK);
+                bindColorFilter(holder, BLACK);
                 break;
         }
+    }
+
+    private void bindColorFilter(ViewHolder holder, int colorFilter) {
+        holder.beaconId.setTextColor(colorFilter);
+        holder.beaconDescription.setTextColor(colorFilter);
+        holder.beaconStatus.setTextColor(colorFilter);
     }
 
     @Override
@@ -134,12 +148,14 @@ public class BeaconsAdapter extends RecyclerView.Adapter<BeaconsAdapter.ViewHold
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public ImageView registrationStatus;
         public TextView beaconId;
+        public TextView beaconDescription;
         public TextView beaconStatus;
 
         public ViewHolder(View view) {
             super(view);
             registrationStatus = Views.findById(view, R.id.beacon_item_state);
             beaconId = Views.findById(view, R.id.beacon_item_id);
+            beaconDescription = Views.findById(view, R.id.beacon_item_description);
             beaconStatus = Views.findById(view, R.id.beacon_item_status);
         }
     }

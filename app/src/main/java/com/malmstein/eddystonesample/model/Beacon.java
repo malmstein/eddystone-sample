@@ -25,10 +25,10 @@ import org.json.JSONObject;
 public class Beacon {
 
     public enum Status {
-        STATUS_UNSPECIFIED,
-        STATUS_ACTIVE,
-        STATUS_INACTIVE,
-        STATUS_DECOMMISSIONED,
+        UNSPECIFIED,
+        ACTIVE,
+        INACTIVE,
+        DECOMMISSIONED,
         STABILITY_UNSPECIFIED,
         UNREGISTERED,
         NOT_AUTHORIZED
@@ -68,7 +68,7 @@ public class Beacon {
         try {
             status = Status.valueOf(response.getString("status"));
         } catch (JSONException e) {
-            status = Status.STATUS_UNSPECIFIED;
+            status = Status.UNSPECIFIED;
         }
 
         try {
@@ -106,7 +106,7 @@ public class Beacon {
                 .put("type", type)
                 .put("id", StringUtils.base64Encode(id));
         json.put("advertisedId", advertisedId);
-        if (!status.equals(Status.STATUS_UNSPECIFIED)) {
+        if (!status.equals(Status.UNSPECIFIED)) {
             json.put("status", status);
         }
         if (placeId != null) {
@@ -165,7 +165,11 @@ public class Beacon {
     }
 
     public static Beacon from(byte[] id, int rssi) {
-        return new Beacon("EDDYSTONE", id, Beacon.Status.STATUS_UNSPECIFIED, rssi);
+        return new Beacon("EDDYSTONE", id, Beacon.Status.UNSPECIFIED, rssi);
+    }
+
+    public String getDescription(){
+        return description;
     }
 
 }
