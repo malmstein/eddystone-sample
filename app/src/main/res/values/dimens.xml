@@ -15,4 +15,6 @@
   <dimen name="card_title_size">14sp</dimen>
   <dimen name="card_divider_height">8dp</dimen>
   <dimen name="card_spans_padding">8dp</dimen>
+
+  <dimen name="beacon_map_height">120dp</dimen>
 </resources>
