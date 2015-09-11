@@ -1,5 +1,6 @@
 package com.malmstein.eddystonesample.scan;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -9,12 +10,13 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.malmstein.eddystonesample.R;
+import com.malmstein.eddystonesample.manage.ManageBeaconActivity;
 import com.malmstein.eddystonesample.model.Beacon;
 import com.novoda.notils.caster.Views;
 
 import java.util.ArrayList;
 
-public class ScanFragment extends Fragment {
+public class ScanFragment extends Fragment implements BeaconsAdapter.Listener {
 
     private BeaconsAdapter beaconsAdapter;
     private RecyclerView beaconsList;
@@ -28,7 +30,7 @@ public class ScanFragment extends Fragment {
         beaconsList.setLayoutManager(new LinearLayoutManager(getContext()));
         beaconsList.addItemDecoration(new SimpleDividerItemDecoration(getContext()));
 
-        beaconsAdapter = new BeaconsAdapter(new ArrayList<Beacon>());
+        beaconsAdapter = new BeaconsAdapter(new ArrayList<Beacon>(), this);
         beaconsList.setAdapter(beaconsAdapter);
 
         return rootView;
@@ -40,5 +42,12 @@ public class ScanFragment extends Fragment {
 
     public void reset() {
         beaconsAdapter.clear();
+    }
+
+    @Override
+    public void onBeaconClicked(Beacon beacon) {
+        Intent manageBeaon = new Intent(getActivity(), ManageBeaconActivity.class);
+        manageBeaon.putExtra("beacon", beacon);
+        startActivity(manageBeaon);
     }
 }

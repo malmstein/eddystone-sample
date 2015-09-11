@@ -17,6 +17,11 @@
     <item name="android:drawablePadding">@dimen/button_drawable_padding</item>
   </style>
 
+  <style name="Eddystone.Title">
+    <item name="android:textAppearance">@style/TextAppearance.AppCompat.Title</item>
+    <item name="android:textColor">@color/black</item>
+  </style>
+
   <style name="Eddystone.Subhead">
     <item name="android:textAppearance">@style/TextAppearance.AppCompat.Subhead</item>
     <item name="android:textColor">@color/black</item>

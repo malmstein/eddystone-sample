@@ -19,10 +19,12 @@ import android.support.annotation.Nullable;
 import com.google.android.gms.maps.model.LatLng;
 import com.malmstein.eddystonesample.StringUtils;
 
+import java.io.Serializable;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class Beacon {
+public class Beacon implements Serializable{
 
     public enum Status {
         UNSPECIFIED,

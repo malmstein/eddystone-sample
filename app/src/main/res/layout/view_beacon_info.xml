@@ -1,64 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  android:id="@+id/card_root"
+  android:id="@+id/beacon_item_root"
   android:background="@drawable/selector_card_clickable"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
   android:orientation="vertical"
   android:padding="@dimen/card_content_padding">
 
+
   <TextView
-    style="@style/Eddystone.Subhead"
-    android:id="@+id/beacon_info_type"
-    android:text="Eddystone"
+    style="@style/Eddystone.Title"
+    android:text="Details"
     android:textColor="@color/black"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content" />
 
   <TextView
     style="@style/Eddystone.Subhead"
-    android:id="@+id/beacon_info_id"
-    android:text="1123123n12k3n1lkn123"
-    android:textColor="@color/black"
+    android:id="@+id/beacon_info_type"
+    android:text="Eddystone"
+    android:textColor="@color/grey"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:paddingTop="@dimen/card_content_padding"/>
+    android:paddingTop="@dimen/card_inset_padding"/>
+
+  <TextView
+    style="@style/Eddystone.Subhead"
+    android:id="@+id/beacon_info_id"
+    android:text="1123123n12k3n1lkn123"
+    android:textColor="@color/grey"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:paddingTop="@dimen/card_inset_padding"/>
 
   <TextView
     style="@style/Eddystone.Subhead"
     android:id="@+id/beacon_info_status"
     android:text="Status"
-    android:textColor="@color/black"
+    android:textColor="@color/grey"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:paddingTop="@dimen/card_content_padding"/>
+    android:paddingTop="@dimen/card_inset_padding"/>
 
   <TextView
     style="@style/Eddystone.Subhead"
     android:id="@+id/beacon_info_place_id"
     android:text="Place Id"
-    android:textColor="@color/black"
+    android:textColor="@color/grey"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:paddingTop="@dimen/card_content_padding"/>
+    android:paddingTop="@dimen/card_inset_padding"/>
 
   <TextView
     style="@style/Eddystone.Subhead"
     android:id="@+id/beacon_info_stability"
     android:text="Stability"
-    android:textColor="@color/black"
+    android:textColor="@color/grey"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:paddingTop="@dimen/card_content_padding"/>
+    android:paddingTop="@dimen/card_inset_padding"/>
 
   <TextView
     style="@style/Eddystone.Subhead"
     android:id="@+id/beacon_info_description"
     android:text="Description"
-    android:textColor="@color/black"
+    android:textColor="@color/grey"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:paddingTop="@dimen/card_content_padding"/>
+    android:paddingTop="@dimen/card_inset_padding"/>
 
 </LinearLayout>

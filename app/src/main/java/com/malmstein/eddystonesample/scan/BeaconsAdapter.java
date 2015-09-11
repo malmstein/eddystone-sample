@@ -38,9 +38,11 @@ public class BeaconsAdapter extends RecyclerView.Adapter<BeaconsAdapter.ViewHold
     private static final int GREY = Color.rgb(150, 150, 150);
 
     private ArrayList<Beacon> beacons;
+    private final Listener listener;
 
-    public BeaconsAdapter(ArrayList<Beacon> beacons) {
+    public BeaconsAdapter(ArrayList<Beacon> beacons, Listener listener) {
         this.beacons = beacons;
+        this.listener = listener;
     }
 
     @Override
@@ -55,6 +57,7 @@ public class BeaconsAdapter extends RecyclerView.Adapter<BeaconsAdapter.ViewHold
         final Beacon beacon = beacons.get(position);
         bindText(holder, beacon);
         bindIcon(holder, beacon);
+        bindListener(holder, beacon);
     }
 
     private void bindText(ViewHolder holder, Beacon beacon) {
@@ -109,6 +112,15 @@ public class BeaconsAdapter extends RecyclerView.Adapter<BeaconsAdapter.ViewHold
         holder.beaconStatus.setTextColor(colorFilter);
     }
 
+    private void bindListener(ViewHolder holder, final Beacon beacon) {
+        holder.root.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onBeaconClicked(beacon);
+            }
+        });
+    }
+
     @Override
     public int getItemCount() {
         return beacons.size();
@@ -150,13 +162,19 @@ public class BeaconsAdapter extends RecyclerView.Adapter<BeaconsAdapter.ViewHold
         public TextView beaconId;
         public TextView beaconDescription;
         public TextView beaconStatus;
+        public View root;
 
         public ViewHolder(View view) {
             super(view);
+            root = Views.findById(view, R.id.beacon_item_root);
             registrationStatus = Views.findById(view, R.id.beacon_item_state);
             beaconId = Views.findById(view, R.id.beacon_item_id);
             beaconDescription = Views.findById(view, R.id.beacon_item_description);
             beaconStatus = Views.findById(view, R.id.beacon_item_status);
         }
+    }
+
+    public interface Listener {
+        void onBeaconClicked(Beacon beacon);
     }
 }

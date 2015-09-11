@@ -1,10 +1,13 @@
 package com.malmstein.eddystonesample.manage;
 
 import android.content.Context;
-import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
+import android.view.LayoutInflater;
+import android.widget.FrameLayout;
 
-public class BeaconAttachmentsView extends CardView {
+import com.malmstein.eddystonesample.R;
+
+public class BeaconAttachmentsView extends FrameLayout {
 
     public BeaconAttachmentsView(Context context) {
         super(context);
@@ -16,6 +19,13 @@ public class BeaconAttachmentsView extends CardView {
 
     public BeaconAttachmentsView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+    }
+
+    @Override
+    protected void onFinishInflate() {
+        super.onFinishInflate();
+        LayoutInflater.from(getContext()).inflate(R.layout.view_beacon_attachments, null);
+
     }
 
 }
