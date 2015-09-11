@@ -6,7 +6,6 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.android.gms.common.SignInButton;
@@ -17,7 +16,7 @@ import com.novoda.notils.caster.Views;
 public class AccountFragment extends Fragment {
 
     private SignInButton signIn;
-    private Button signOut;
+    private TextView signOut;
     private TextView signedInText;
     private TextView signedOutText;
     private Listener listener;

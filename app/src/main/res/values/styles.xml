@@ -15,6 +15,7 @@
     <item name="android:textSize">@dimen/button_text_size</item>
     <item name="android:textColor">@color/black</item>
     <item name="android:drawablePadding">@dimen/button_drawable_padding</item>
+    <item name="android:background">@drawable/selector_card_clickable</item>
   </style>
 
   <style name="Eddystone.Title">
