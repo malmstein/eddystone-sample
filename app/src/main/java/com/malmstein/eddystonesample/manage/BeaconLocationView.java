@@ -70,8 +70,8 @@ public class BeaconLocationView extends CardView {
 
     private void updateStaticMapPicture(LatLng latLng) {
         String url = String.format(
-                "https://maps.googleapis.com/maps/api/staticmap?size=%1dx%2d&scale=2&markers=%.6f,%.6f",
-                beaconMap.getWidth(), beaconMap.getHeight(), latLng.latitude, latLng.longitude);
+                "https://maps.googleapis.com/maps/api/staticmap?size=640x300&scale=2&markers=%.6f,%.6f",
+                latLng.latitude, latLng.longitude);
         new FetchStaticMapTask(beaconMap).execute(url);
     }
 
