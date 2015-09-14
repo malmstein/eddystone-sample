@@ -67,10 +67,14 @@ public class BluetoothScanner {
         return false;
     }
 
+
     private void fetchBeaconStatus(final Beacon beacon) {
+        // only signed in accounts with permissions are able to retrieve beacon state
         if ((proximityBeacon == null)) {
             listener.onBeaconScanned(beacon);
-        } else if (proximityBeacon.hasAccount()) {
+        } else if (!proximityBeacon.hasAccount()) {
+            listener.onBeaconScanned(beacon);
+        } else {
             proximityBeacon.getBeacon(new Callback() {
                 @Override
                 public void onFailure(Request request, IOException e) {
@@ -104,8 +108,6 @@ public class BluetoothScanner {
                     listener.onBeaconScanned(fetchedBeacon);
                 }
             }, beacon.getBeaconName());
-        } else {
-            listener.onBeaconScanned(beacon);
         }
     }
 
