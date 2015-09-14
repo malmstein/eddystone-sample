@@ -31,10 +31,10 @@ public class BeaconStabilityDialogFragment extends DialogFragment {
         mItems = getContext().getResources().getTextArray(R.array.beacon_stability_enums);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle(R.string.beacon_dialog_title)
+        builder.setTitle(R.string.beacon_stability_dialog_title)
                 .setItems(mItems, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                       mListener.onBeaconStabilityChange(mItems[which].toString());
+                        mListener.onBeaconStabilityChanged(mItems[which].toString());
                     }
                 });
 
@@ -42,6 +42,6 @@ public class BeaconStabilityDialogFragment extends DialogFragment {
     }
 
     public interface Listener {
-        void onBeaconStabilityChange(String selectedStability);
+        void onBeaconStabilityChanged(String selectedStability);
     }
 } 

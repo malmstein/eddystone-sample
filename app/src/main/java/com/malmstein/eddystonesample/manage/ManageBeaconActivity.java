@@ -31,7 +31,7 @@ import java.io.IOException;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class ManageBeaconActivity extends AppCompatActivity implements BeaconLocationView.Listener, BeaconInfoView.Listener, BeaconStabilityDialogFragment.Listener {
+public class ManageBeaconActivity extends AppCompatActivity implements BeaconLocationView.Listener, BeaconInfoView.Listener, BeaconStabilityDialogFragment.Listener, BeaconDescriptionFragment.Listener {
 
     private static final String TAG = "ManageBeaconActivity";
     public static final String KEY_BEACON = BuildConfig.APPLICATION_ID + "EXTRA_BEACON";
@@ -168,15 +168,26 @@ public class ManageBeaconActivity extends AppCompatActivity implements BeaconLoc
     }
 
     @Override
-    public void onShowStabilityDialog(String stability) {
+    public void onChangeStability() {
         DialogFragment newFragment = new BeaconStabilityDialogFragment();
         newFragment.show(getSupportFragmentManager(), "BeaconStability");
     }
 
     @Override
-    public void onBeaconStabilityChange(String newStability) {
+    public void onChangeDescription() {
+        DialogFragment newFragment = new BeaconDescriptionFragment();
+        newFragment.show(getSupportFragmentManager(), "BeaconDescription");
+    }
+
+    @Override
+    public void onBeaconStabilityChanged(String newStability) {
         beacon.setExpectedStability(newStability);
         updateRemoteBeacon();
     }
 
+    @Override
+    public void onBeaconDescriptionChanged(String description) {
+        beacon.setDescription(description);
+        updateRemoteBeacon();
+    }
 }

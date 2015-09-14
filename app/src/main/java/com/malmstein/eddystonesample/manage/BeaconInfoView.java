@@ -49,9 +49,19 @@ public class BeaconInfoView extends CardView {
         beaconType.setText(beacon.getType());
         beaconId.setText(beacon.getHexId());
         beaconStatus.setText(beacon.getStatus().name());
-        beaconDescription.setText(beacon.getDescription());
 
+        bindDescription(beacon);
         bindStability(beacon);
+    }
+
+    private void bindDescription(final Beacon beacon) {
+        beaconDescription.setText(beacon.getDescription());
+        beaconDescription.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onChangeDescription();
+            }
+        });
     }
 
     private void bindStability(final Beacon beacon) {
@@ -61,13 +71,15 @@ public class BeaconInfoView extends CardView {
         beaconStability.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                listener.onShowStabilityDialog(beacon.getExpectedStability());
+                listener.onChangeStability();
             }
         });
     }
 
     public interface Listener {
-        void onShowStabilityDialog(String expectedStability);
+        void onChangeStability();
+
+        void onChangeDescription();
     }
 
 }

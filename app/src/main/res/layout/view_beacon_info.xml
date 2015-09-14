@@ -46,28 +46,24 @@
   <TextView
     style="@style/Eddystone.Subhead"
     android:id="@+id/beacon_info_stability"
-    android:text="Expected Stability"
+    android:text="@string/beacon_stability"
     android:textColor="@color/grey"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:drawableStart="@drawable/ic_edit"
+    android:drawablePadding="@dimen/card_inset_padding"
     android:paddingTop="@dimen/card_inset_padding" />
 
-  <android.support.design.widget.TextInputLayout
-    android:layout_width="match_parent"
+  <TextView
+    style="@style/Eddystone.Subhead"
+    android:id="@+id/beacon_info_description"
+    android:text="@string/manage_beacon_description"
+    android:textColor="@color/grey"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_marginTop="@dimen/card_inset_padding"
-    app:hintTextAppearance="@style/TextAppearance.AppCompat">
-
-    <android.support.v7.widget.AppCompatEditText
-      style="@style/Eddystone.Subhead"
-      android:inputType="text"
-      android:textColor="@color/grey"
-      android:hint="@string/hint_description"
-      android:id="@+id/beacon_info_description"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content" />
-
-  </android.support.design.widget.TextInputLayout>
+    android:drawableStart="@drawable/ic_edit"
+    android:drawablePadding="@dimen/card_inset_padding"
+    android:paddingTop="@dimen/card_inset_padding" />
 
   <TextView
     android:id="@+id/beacon_info_deactivate"

@@ -4,16 +4,21 @@
   <string name="activity_scanning">Eddystone Sample</string>
   <string name="activity_manage">Manage Beacon</string>
 
-  <string name="bluetooth_please_enable">Please enable Bluetooth</string>
+  <string name="action_deactivate">Deactivate</string>
+  <string name="action_add_attachment">Add attachment</string>
+  <string name="action_disconnect">Disconnect</string>
 
+  <string name="bluetooth_please_enable">Please enable Bluetooth</string>
   <string name="choose_account">In order to manage your beacons it is needed to Sign in with your Google account.\r\nYou can still scan beacons but you won\'t be able to register them or modify any of their properties</string>
   <string name="use_account">Using %1$s account</string>
   <string name="please_pick_account">Please pick an account</string>
 
-  <string name="hint_description">Description of the beacon</string>
+  <string name="title_details">Details</string>
+  <string name="title_location">Location</string>
+  <string name="title_attachments">Attachments</string>
 
-  <string name="beacon_dialog_title">Set beacon stability</string>
-  <string name="beacon_stability">Click to set expected stability</string>
+  <string name="beacon_stability_dialog_title">Set beacon stability</string>
+  <string name="beacon_stability">Tap to set expected stability</string>
   <string-array name="beacon_stability_enums">
     <item>STABLE</item>
     <item>PORTABLE</item>
@@ -21,17 +26,15 @@
     <item>ROVING</item>
   </string-array>
 
-  <string name="action_deactivate">Deactivate</string>
-  <string name="action_add_attachment">Add attachment</string>
-  <string name="action_disconnect">Disconnect</string>
-
-  <string name="title_details">Details</string>
-  <string name="title_location">Location</string>
-  <string name="title_attachments">Attachments</string>
+  <string name="beacon_description_dialog_title">Set beacon description</string>
+  <string name="dialog_update">Update</string>
+  <string name="dialog_cancel">Cancel</string>
 
   <string name="tap_map_to_add_location">Tap on the map to set the Beacon\'s location </string>
   <string name="manage_beacon_update">Updating beacon…</string>
   <string name="manage_beacon_update_failure">Error updating beacon</string>
   <string name="manage_beacon_update_complete">Beacon successfully updated</string>
+  <string name="manage_beacon_description">Tap to set Beacon description</string>
+  <string name="manage_beacon_description_hint">Beacon description</string>
 
 </resources>
