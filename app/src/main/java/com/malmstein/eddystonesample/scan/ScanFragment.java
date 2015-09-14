@@ -2,6 +2,7 @@ package com.malmstein.eddystonesample.scan;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -10,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.malmstein.eddystonesample.R;
+import com.malmstein.eddystonesample.account.AccountSharedPreferences;
 import com.malmstein.eddystonesample.manage.ManageBeaconActivity;
 import com.malmstein.eddystonesample.model.Beacon;
 import com.novoda.notils.caster.Views;
@@ -46,8 +48,13 @@ public class ScanFragment extends Fragment implements BeaconsAdapter.Listener {
 
     @Override
     public void onBeaconClicked(Beacon beacon) {
-        Intent manageBeaon = new Intent(getActivity(), ManageBeaconActivity.class);
-        manageBeaon.putExtra(ManageBeaconActivity.KEY_BEACON, beacon);
-        startActivity(manageBeaon);
+        AccountSharedPreferences accountSharedPreferences = AccountSharedPreferences.newInstance(getActivity());
+        if (accountSharedPreferences.isLoggedIn()){
+            Intent manageBeacon = new Intent(getActivity(), ManageBeaconActivity.class);
+            manageBeacon.putExtra(ManageBeaconActivity.KEY_BEACON, beacon);
+            startActivity(manageBeacon);
+        } else {
+            Snackbar.make(beaconsList, getString(R.string.choose_account), Snackbar.LENGTH_LONG).show();
+        }
     }
 }
