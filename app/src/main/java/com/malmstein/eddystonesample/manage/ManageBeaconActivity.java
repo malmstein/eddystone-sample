@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuItem;
 
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
@@ -56,6 +57,17 @@ public class ManageBeaconActivity extends AppCompatActivity implements BeaconLoc
         beaconInfoView = Views.findById(this, R.id.beacon_info_view);
         beaconAttachmentsView = Views.findById(this, R.id.beacon_attachments_view);
         beaconLocationView = Views.findById(this, R.id.beacon_location_view);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        if (item.getItemId() == android.R.id.home){
+            onBackPressed();
+            return false;
+        } else {
+            return super.onOptionsItemSelected(item);
+        }
     }
 
     @Override

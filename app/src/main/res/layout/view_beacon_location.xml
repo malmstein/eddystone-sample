@@ -22,7 +22,8 @@
     android:layout_height="@dimen/beacon_map_height"
     android:layout_marginTop="@dimen/card_inset_padding"
     android:scaleType="center"
-    android:src="@drawable/ic_map_static"/>
+    android:src="@drawable/ic_map_static"
+    android:background="@drawable/selector_card_clickable"/>
 
   <TextView
     style="@style/Eddystone.Subhead"

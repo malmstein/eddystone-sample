@@ -34,7 +34,6 @@
     <activity
       android:name="com.malmstein.eddystonesample.manage.ManageBeaconActivity"
       android:label="@string/app_name"
-      android:parentActivityName="com.malmstein.eddystonesample.EddystoneActivity"
       android:theme="@style/Eddystone" />
 
   </application>
