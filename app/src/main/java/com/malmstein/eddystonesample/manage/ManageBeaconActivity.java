@@ -3,6 +3,8 @@ package com.malmstein.eddystonesample.manage;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
+import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -29,7 +31,7 @@ import java.io.IOException;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class ManageBeaconActivity extends AppCompatActivity implements BeaconLocationView.Listener {
+public class ManageBeaconActivity extends AppCompatActivity implements BeaconLocationView.Listener, BeaconInfoView.Listener, BeaconStabilityDialogFragment.Listener {
 
     private static final String TAG = "ManageBeaconActivity";
     public static final String KEY_BEACON = BuildConfig.APPLICATION_ID + "EXTRA_BEACON";
@@ -61,8 +63,7 @@ public class ManageBeaconActivity extends AppCompatActivity implements BeaconLoc
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
-        if (item.getItemId() == android.R.id.home){
+        if (item.getItemId() == android.R.id.home) {
             onBackPressed();
             return false;
         } else {
@@ -100,7 +101,7 @@ public class ManageBeaconActivity extends AppCompatActivity implements BeaconLoc
     }
 
     private void updateWith(Beacon beacon) {
-        beaconInfoView.updateWith(beacon);
+        beaconInfoView.updateWith(beacon, this);
         beaconLocationView.updateWith(beacon, this);
         beaconAttachmentsView.updateWith(beacon);
     }
@@ -133,6 +134,7 @@ public class ManageBeaconActivity extends AppCompatActivity implements BeaconLoc
             @Override
             public void onFailure(Request request, IOException e) {
                 Log.d(TAG, "Failed request: " + request, e);
+                Snackbar.make(beaconInfoView, R.string.manage_beacon_update_failure, Snackbar.LENGTH_LONG).show();
             }
 
             @Override
@@ -146,8 +148,10 @@ public class ManageBeaconActivity extends AppCompatActivity implements BeaconLoc
                         return;
                     }
                     updateWith(beacon);
+                    Snackbar.make(beaconInfoView, R.string.manage_beacon_update_complete, Snackbar.LENGTH_LONG).show();
                 } else {
                     Log.d(TAG, "Unsuccessful updateBeacon request: " + body);
+                    Snackbar.make(beaconInfoView, R.string.manage_beacon_update_failure, Snackbar.LENGTH_LONG).show();
                 }
             }
         };
@@ -159,7 +163,20 @@ public class ManageBeaconActivity extends AppCompatActivity implements BeaconLoc
             Log.d(TAG, "JSONException in creating update request", e);
             return;
         }
-
+        Snackbar.make(beaconInfoView, R.string.manage_beacon_update, Snackbar.LENGTH_LONG).show();
         proximityBeacon.updateBeacon(updateBeaconCallback, beacon.getBeaconName(), json);
     }
+
+    @Override
+    public void onShowStabilityDialog(String stability) {
+        DialogFragment newFragment = new BeaconStabilityDialogFragment();
+        newFragment.show(getSupportFragmentManager(), "BeaconStability");
+    }
+
+    @Override
+    public void onBeaconStabilityChange(String newStability) {
+        beacon.setExpectedStability(newStability);
+        updateRemoteBeacon();
+    }
+
 }

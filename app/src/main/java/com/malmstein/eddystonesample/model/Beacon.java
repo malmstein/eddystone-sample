@@ -201,4 +201,8 @@ public class Beacon implements Serializable {
         longitude = place.getLatLng().longitude;
     }
 
+    public void setExpectedStability(String newStability){
+        expectedStability = newStability;
+    }
+
 }

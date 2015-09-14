@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.TextView;
 
 import com.malmstein.eddystonesample.R;
@@ -12,6 +13,7 @@ import com.novoda.notils.caster.Views;
 
 public class BeaconInfoView extends CardView {
 
+    private Listener listener;
     private TextView beaconType;
     private TextView beaconId;
     private TextView beaconStatus;
@@ -42,12 +44,30 @@ public class BeaconInfoView extends CardView {
         beaconDescription = Views.findById(this, R.id.beacon_info_description);
     }
 
-    public void updateWith(Beacon beacon) {
+    public void updateWith(Beacon beacon, Listener listener) {
+        this.listener = listener;
         beaconType.setText(beacon.getType());
         beaconId.setText(beacon.getHexId());
         beaconStatus.setText(beacon.getStatus().name());
-        beaconStability.setText(beacon.getExpectedStability());
         beaconDescription.setText(beacon.getDescription());
+
+        bindStability(beacon);
+    }
+
+    private void bindStability(final Beacon beacon) {
+        beaconStability.setText(beacon.getExpectedStability() == null ?
+                getContext().getResources().getString(R.string.beacon_stability) :
+                beacon.getExpectedStability());
+        beaconStability.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onShowStabilityDialog(beacon.getExpectedStability());
+            }
+        });
+    }
+
+    public interface Listener {
+        void onShowStabilityDialog(String expectedStability);
     }
 
 }
