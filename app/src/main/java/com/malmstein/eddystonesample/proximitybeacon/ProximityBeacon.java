@@ -24,7 +24,10 @@ import org.json.JSONObject;
  */
 public interface ProximityBeacon {
 
+  boolean hasAccount();
+
   /**
+   *
    * https://developers.google.com/beacons/proximity/reference/rest/v1beta1/beaconinfo/getforobserved
    */
   void getForObserved(Callback callback, JSONObject requestBody, String apiKey);

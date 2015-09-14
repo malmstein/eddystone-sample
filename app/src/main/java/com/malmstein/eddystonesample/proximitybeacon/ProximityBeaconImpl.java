@@ -16,6 +16,7 @@ package com.malmstein.eddystonesample.proximitybeacon;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.google.android.gms.auth.GoogleAuthException;
@@ -50,6 +51,11 @@ public class ProximityBeaconImpl implements ProximityBeacon {
         this.ctx = ctx;
         this.account = account;
         this.httpClient = new OkHttpClient();
+    }
+
+    @Override
+    public boolean hasAccount() {
+        return !account.equals("");
     }
 
     @Override
@@ -145,7 +151,7 @@ public class ProximityBeaconImpl implements ProximityBeacon {
 
         @Override
         protected Void doInBackground(Void... params) {
-            if (account != null) {
+            if (!TextUtils.isEmpty(account)) {
                 try {
                     final String token = GoogleAuthUtil.getTokenWithNotification(ctx, account, SCOPE, null);
                     Request.Builder requestBuilder = new Request.Builder()

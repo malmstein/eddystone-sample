@@ -68,9 +68,9 @@ public class BluetoothScanner {
     }
 
     private void fetchBeaconStatus(final Beacon beacon) {
-        if (proximityBeacon == null){
+        if ((proximityBeacon == null)) {
             listener.onBeaconScanned(beacon);
-        } else {
+        } else if (proximityBeacon.hasAccount()) {
             proximityBeacon.getBeacon(new Callback() {
                 @Override
                 public void onFailure(Request request, IOException e) {
@@ -104,6 +104,8 @@ public class BluetoothScanner {
                     listener.onBeaconScanned(fetchedBeacon);
                 }
             }, beacon.getBeaconName());
+        } else {
+            listener.onBeaconScanned(beacon);
         }
     }
 
