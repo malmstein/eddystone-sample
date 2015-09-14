@@ -145,39 +145,41 @@ public class ProximityBeaconImpl implements ProximityBeacon {
 
         @Override
         protected Void doInBackground(Void... params) {
-            try {
-                final String token = GoogleAuthUtil.getTokenWithNotification(ctx, account, SCOPE, null);
-                Request.Builder requestBuilder = new Request.Builder()
-                        .header(AUTHORIZATION, BEARER + token)
-                        .url(ENDPOINT + urlPart);
-                switch (method) {
-                    case PUT:
-                        requestBuilder.put(RequestBody.create(MEDIA_TYPE_JSON, json));
-                        break;
-                    case POST:
-                        requestBuilder.post(RequestBody.create(MEDIA_TYPE_JSON, json));
-                        break;
-                    case DELETE:
-                        requestBuilder.delete(RequestBody.create(MEDIA_TYPE_JSON, json));
-                        break;
-                    default:
-                        break;
+            if (account != null) {
+                try {
+                    final String token = GoogleAuthUtil.getTokenWithNotification(ctx, account, SCOPE, null);
+                    Request.Builder requestBuilder = new Request.Builder()
+                            .header(AUTHORIZATION, BEARER + token)
+                            .url(ENDPOINT + urlPart);
+                    switch (method) {
+                        case PUT:
+                            requestBuilder.put(RequestBody.create(MEDIA_TYPE_JSON, json));
+                            break;
+                        case POST:
+                            requestBuilder.post(RequestBody.create(MEDIA_TYPE_JSON, json));
+                            break;
+                        case DELETE:
+                            requestBuilder.delete(RequestBody.create(MEDIA_TYPE_JSON, json));
+                            break;
+                        default:
+                            break;
+                    }
+                    Request request = requestBuilder.build();
+                    httpClient.newCall(request).enqueue(new HttpCallback(callback));
+                } catch (UserRecoverableAuthException e) {
+                    // GooglePlayServices.apk is either old, disabled, or not present
+                    // so we need to show the user some UI in the activity to recover.
+                    Log.e(TAG, "UserRecoverableAuthException", e);
+                } catch (GoogleAuthException e) {
+                    // Some other type of unrecoverable exception has occurred.
+                    // Report and log the error as appropriate for your app.
+                    Log.e(TAG, "GoogleAuthException", e);
+                } catch (IOException e) {
+                    // The fetchToken() method handles Google-specific exceptions,
+                    // so this indicates something went wrong at a higher level.
+                    // TIP: Check for network connectivity before starting the AsyncTask.
+                    Log.e(TAG, "IOException", e);
                 }
-                Request request = requestBuilder.build();
-                httpClient.newCall(request).enqueue(new HttpCallback(callback));
-            } catch (UserRecoverableAuthException e) {
-                // GooglePlayServices.apk is either old, disabled, or not present
-                // so we need to show the user some UI in the activity to recover.
-                Log.e(TAG, "UserRecoverableAuthException", e);
-            } catch (GoogleAuthException e) {
-                // Some other type of unrecoverable exception has occurred.
-                // Report and log the error as appropriate for your app.
-                Log.e(TAG, "GoogleAuthException", e);
-            } catch (IOException e) {
-                // The fetchToken() method handles Google-specific exceptions,
-                // so this indicates something went wrong at a higher level.
-                // TIP: Check for network connectivity before starting the AsyncTask.
-                Log.e(TAG, "IOException", e);
             }
             return null;
         }
