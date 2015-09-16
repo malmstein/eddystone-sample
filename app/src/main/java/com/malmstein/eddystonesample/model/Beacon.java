@@ -144,7 +144,11 @@ public class Beacon implements Serializable {
     }
 
     public String getHexId() {
-        return StringUtils.toHexString(id);
+        if (id != null){
+            return StringUtils.toHexString(id);
+        }else {
+            return "";
+        }
     }
 
     /**

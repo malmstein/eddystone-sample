@@ -1,6 +1,8 @@
 package com.malmstein.eddystonesample.manage;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
@@ -200,6 +202,48 @@ public class ManageBeaconActivity extends AppCompatActivity implements BeaconLoc
     public void onActivateBeacon() {
         Snackbar.make(beaconInfoView, R.string.manage_beacon_update, Snackbar.LENGTH_LONG).show();
         proximityBeacon.activateBeacon(updateBeaconCallback, beacon.getBeaconName());
+    }
+
+    @Override
+    public void onDecommissionBeacon() {
+        new AlertDialog.Builder(this)
+                .setTitle(R.string.dialog_decommission_title)
+                .setMessage(R.string.dialog_decommission_message)
+                .setPositiveButton(R.string.action_decommission, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Snackbar.make(beaconInfoView, R.string.manage_beacon_update, Snackbar.LENGTH_LONG).show();
+                        dialog.dismiss();
+                        Callback decommissionCallback = new Callback() {
+                            @Override
+                            public void onFailure(Request request, IOException e) {
+                                Log.d(TAG, "Failed request: " + request, e);
+                            }
+
+                            @Override
+                            public void onResponse(Response response) throws IOException {
+                                if (response.isSuccessful()) {
+//                                    beacon.status = Beacon.STATUS_DECOMMISSIONED;
+//                                    updateBeacon();
+
+                                    updateWith(beacon);
+                                    Snackbar.make(beaconInfoView, R.string.manage_beacon_update_complete, Snackbar.LENGTH_LONG).show();
+                                } else {
+                                    String body = response.body().string();
+                                    Log.d(TAG, "Unsuccessful decommissionBeacon request: " + body);
+                                }
+                            }
+                        };
+                        proximityBeacon.decommissionBeacon(decommissionCallback, beacon.getBeaconName());
+                    }
+                })
+                .setNegativeButton(R.string.dialog_cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .show();
     }
 
     @Override
