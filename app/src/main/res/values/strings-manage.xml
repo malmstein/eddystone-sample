@@ -29,4 +29,6 @@
   <string name="dialog_decommission_title">Decommission Beacon</string>
   <string name="dialog_decommission_message">Are you sure you want to decommission this beacon? This operation is irreversible and the beacon cannot be registered again</string>
 
+  <string name="beacon_namespace">Namespace: %1$s </string>
+
 </resources>

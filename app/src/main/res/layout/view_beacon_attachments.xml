@@ -16,6 +16,14 @@
     android:layout_height="wrap_content" />
 
   <TextView
+    style="@style/Eddystone.Subhead"
+    android:id="@+id/beacon_attachments_namespace"
+    android:textColor="@color/grey"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:paddingTop="@dimen/card_inset_padding" />
+
+  <TextView
     android:id="@+id/beacon_attachments_add"
     style="@style/Eddystone.Button"
     android:layout_width="wrap_content"

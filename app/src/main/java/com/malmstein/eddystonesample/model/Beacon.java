@@ -22,9 +22,6 @@ import com.malmstein.eddystonesample.StringUtils;
 
 import java.io.Serializable;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 public class Beacon implements Serializable {
 
     public enum Status {
@@ -37,17 +34,27 @@ public class Beacon implements Serializable {
         NOT_AUTHORIZED
     }
 
-    String type;
-    byte[] id;
-    Status status;
-    String placeId;
-    Double latitude;
-    Double longitude;
-    String expectedStability;
-    String description;
-    int rssi;
+    private String type;
+    private byte[] id;
+    private Status status;
+    private String placeId;
+    private Double latitude;
+    private Double longitude;
+    private String expectedStability;
+    private String description;
 
-    public Beacon(String type, byte[] id, Status status, int rssi) {
+    public Beacon(String type, byte[] id, Status status, String placeId, Double latitude, Double longitude, String stability, String description) {
+        this.type = type;
+        this.id = id;
+        this.status = status;
+        this.placeId = placeId;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.expectedStability = stability;
+        this.description = description;
+    }
+
+    public Beacon(String type, byte[] id, Status status) {
         this.type = type;
         this.id = id;
         this.status = status;
@@ -56,10 +63,9 @@ public class Beacon implements Serializable {
         this.longitude = null;
         this.expectedStability = null;
         this.description = null;
-        this.rssi = rssi;
     }
 
-    public Beacon(String type, byte[] id, Status status, int rssi, Place place) {
+    public Beacon(String type, byte[] id, Status status, Place place) {
         this.type = type;
         this.id = id;
         this.status = status;
@@ -68,85 +74,12 @@ public class Beacon implements Serializable {
         this.longitude = place.getLatLng().longitude;
         this.expectedStability = null;
         this.description = null;
-        this.rssi = rssi;
-    }
-
-    public Beacon(JSONObject response) {
-        try {
-            JSONObject json = response.getJSONObject("advertisedId");
-            type = json.getString("type");
-            id = StringUtils.base64Decode(json.getString("id"));
-        } catch (JSONException e) {
-            // NOP
-        }
-
-        try {
-            status = Status.valueOf(response.getString("status"));
-        } catch (JSONException e) {
-            status = Status.UNSPECIFIED;
-        }
-
-        try {
-            placeId = response.getString("placeId");
-        } catch (JSONException e) {
-            // NOP
-        }
-
-        try {
-            JSONObject latLngJson = response.getJSONObject("latLng");
-            latitude = latLngJson.getDouble("latitude");
-            longitude = latLngJson.getDouble("longitude");
-        } catch (JSONException e) {
-            latitude = null;
-            longitude = null;
-        }
-
-        try {
-            expectedStability = response.getString("expectedStability");
-        } catch (JSONException e) {
-            // NOP
-        }
-
-        try {
-            description = response.getString("description");
-        } catch (JSONException e) {
-            // NOP
-        }
-
-    }
-
-    public JSONObject toJson() throws JSONException {
-        JSONObject json = new JSONObject();
-        JSONObject advertisedId = new JSONObject()
-                .put("type", type)
-                .put("id", StringUtils.base64Encode(id));
-        json.put("advertisedId", advertisedId);
-        if (!status.equals(Status.UNSPECIFIED)) {
-            json.put("status", status);
-        }
-        if (placeId != null) {
-            json.put("placeId", placeId);
-        }
-        if (latitude != null && longitude != null) {
-            JSONObject latLng = new JSONObject();
-            latLng.put("latitude", latitude);
-            latLng.put("longitude", longitude);
-            json.put("latLng", latLng);
-        }
-        if (expectedStability != null && !expectedStability.equals(Status.STABILITY_UNSPECIFIED)) {
-            json.put("expectedStability", expectedStability);
-        }
-        if (description != null) {
-            json.put("description", description);
-        }
-        // TODO: beacon properties
-        return json;
     }
 
     public String getHexId() {
-        if (id != null){
+        if (id != null) {
             return StringUtils.toHexString(id);
-        }else {
+        } else {
             return "";
         }
     }
@@ -175,16 +108,12 @@ public class Beacon implements Serializable {
         return type;
     }
 
-    public int getRssi() {
-        return rssi;
-    }
-
     public Status getStatus() {
         return status;
     }
 
-    public static Beacon from(byte[] id, int rssi) {
-        return new Beacon("EDDYSTONE", id, Beacon.Status.UNSPECIFIED, rssi);
+    public static Beacon from(byte[] id) {
+        return new Beacon("EDDYSTONE", id, Beacon.Status.UNSPECIFIED);
     }
 
     public String getDescription() {
@@ -213,4 +142,11 @@ public class Beacon implements Serializable {
         this.description = description;
     }
 
+    public Double getLatitude() {
+        return latitude;
+    }
+
+    public Double getLongitude() {
+        return longitude;
+    }
 }

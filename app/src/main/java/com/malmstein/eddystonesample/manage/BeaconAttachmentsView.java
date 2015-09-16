@@ -13,7 +13,8 @@ import com.novoda.notils.caster.Views;
 
 public class BeaconAttachmentsView extends FrameLayout {
 
-    private TextView addAttachment;
+    private TextView beaconAddAttachment;
+    private TextView beaconNamespace;
 
     public BeaconAttachmentsView(Context context) {
         super(context);
@@ -32,16 +33,22 @@ public class BeaconAttachmentsView extends FrameLayout {
         super.onFinishInflate();
         LayoutInflater.from(getContext()).inflate(R.layout.view_beacon_attachments, this, true);
 
-        addAttachment = Views.findById(this, R.id.beacon_attachments_add);
+        beaconAddAttachment = Views.findById(this, R.id.beacon_attachments_add);
+        beaconNamespace = Views.findById(this, R.id.beacon_attachments_namespace);
     }
 
-    public void updateWith(Beacon beacon) {
+    public void updateWith(Beacon beacon, String namespace) {
         updateVisibility(beacon);
+        bindNamespace(namespace);
         bindClickListener(beacon);
     }
 
+    private void bindNamespace(String namespace) {
+        beaconNamespace.setText(getResources().getString(R.string.beacon_namespace, namespace));
+    }
+
     private void bindClickListener(Beacon beacon) {
-        addAttachment.setOnClickListener(new OnClickListener() {
+        beaconAddAttachment.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
 

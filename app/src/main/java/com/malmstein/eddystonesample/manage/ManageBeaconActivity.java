@@ -22,6 +22,7 @@ import com.malmstein.eddystonesample.BuildConfig;
 import com.malmstein.eddystonesample.R;
 import com.malmstein.eddystonesample.account.AccountSharedPreferences;
 import com.malmstein.eddystonesample.model.Beacon;
+import com.malmstein.eddystonesample.model.BeaconConverter;
 import com.malmstein.eddystonesample.proximitybeacon.BluetoothScanner;
 import com.malmstein.eddystonesample.proximitybeacon.ProximityBeaconImpl;
 import com.novoda.notils.caster.Views;
@@ -45,6 +46,7 @@ public class ManageBeaconActivity extends AppCompatActivity implements BeaconLoc
     private BeaconInfoView beaconInfoView;
     private BeaconAttachmentsView beaconAttachmentsView;
     private BeaconLocationView beaconLocationView;
+    private BeaconConverter beaconConverter = new BeaconConverter();
 
     private Beacon beacon;
     private ProximityBeaconImpl proximityBeacon;
@@ -118,7 +120,7 @@ public class ManageBeaconActivity extends AppCompatActivity implements BeaconLoc
     private void updateWith(Beacon beacon) {
         beaconInfoView.updateWith(beacon, this);
         beaconLocationView.updateWith(beacon, this);
-        beaconAttachmentsView.updateWith(beacon);
+        beaconAttachmentsView.updateWith(beacon, namespace);
     }
 
     private void fetchNamespace() {
@@ -173,7 +175,7 @@ public class ManageBeaconActivity extends AppCompatActivity implements BeaconLoc
     private void updateRemoteBeacon() {
         JSONObject json;
         try {
-            json = beacon.toJson();
+            json = beaconConverter.toJson(beacon);
         } catch (JSONException e) {
             Log.d(TAG, "JSONException in creating update request", e);
             return;
@@ -216,7 +218,7 @@ public class ManageBeaconActivity extends AppCompatActivity implements BeaconLoc
     @Override
     public void onRegisterBeacon() {
         try {
-            JSONObject activeBeacon = beacon.toJson().put("status", Beacon.Status.ACTIVE.name());
+            JSONObject activeBeacon = beaconConverter.toJson(beacon).put("status", Beacon.Status.ACTIVE.name());
             Snackbar.make(beaconInfoView, R.string.manage_beacon_update, Snackbar.LENGTH_LONG).show();
             proximityBeacon.registerBeacon(updateBeaconCallback, activeBeacon);
         } catch (JSONException e) {

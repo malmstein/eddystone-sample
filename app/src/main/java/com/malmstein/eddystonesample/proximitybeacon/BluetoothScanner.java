@@ -8,6 +8,7 @@ import android.util.Log;
 
 import com.malmstein.eddystonesample.StringUtils;
 import com.malmstein.eddystonesample.model.Beacon;
+import com.malmstein.eddystonesample.model.BeaconConverter;
 import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
@@ -23,6 +24,7 @@ public class BluetoothScanner {
 
     private static final String TAG = BluetoothScanner.class.getSimpleName();
 
+    private BeaconConverter beaconConverter = new BeaconConverter();
     private BluetoothLeScanner scanner;
     private ProximityBeacon proximityBeacon;
     private ArrayList<Beacon> arrayList = new ArrayList<>();
@@ -50,7 +52,7 @@ public class BluetoothScanner {
             }
 
             Log.i(TAG, "id " + StringUtils.toHexString(id) + ", rssi " + result.getRssi());
-            Beacon beacon = Beacon.from(id, result.getRssi());
+            Beacon beacon = Beacon.from(id);
             arrayList.add(beacon);
             return beacon;
         } else {
@@ -88,17 +90,17 @@ public class BluetoothScanner {
                         case 200:
                             try {
                                 String body = response.body().string();
-                                fetchedBeacon = new Beacon(new JSONObject(body));
+                                fetchedBeacon = beaconConverter.from(new JSONObject(body));
                             } catch (JSONException e) {
                                 Log.e(TAG, "JSONException", e);
                                 return;
                             }
                             break;
                         case 403:
-                            fetchedBeacon = new Beacon(beacon.getType(), beacon.getId(), Beacon.Status.NOT_AUTHORIZED, beacon.getRssi());
+                            fetchedBeacon = new Beacon(beacon.getType(), beacon.getId(), Beacon.Status.NOT_AUTHORIZED);
                             break;
                         case 404:
-                            fetchedBeacon = new Beacon(beacon.getType(), beacon.getId(), Beacon.Status.UNREGISTERED, beacon.getRssi());
+                            fetchedBeacon = new Beacon(beacon.getType(), beacon.getId(), Beacon.Status.UNREGISTERED);
                             break;
                         default:
                             Log.e(TAG, "Unhandled beacon service response: " + response);
