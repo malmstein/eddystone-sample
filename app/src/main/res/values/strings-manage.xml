@@ -33,5 +33,7 @@
 
   <string name="dialog_add_attachment_type">Type</string>
   <string name="dialog_add_attachment_data">Data</string>
+  <string name="adding_attachment">Adding attachment…</string>
+  <string name="removing_attachment">Removing attachment…</string>
 
 </resources>

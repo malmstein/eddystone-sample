@@ -1,11 +1,12 @@
 package com.malmstein.eddystonesample.manage;
 
 import android.content.Context;
+import android.support.design.widget.Snackbar;
+import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -20,10 +21,11 @@ import com.squareup.okhttp.Response;
 
 import java.io.IOException;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class BeaconAttachmentsView extends FrameLayout {
+public class BeaconAttachmentsView extends CardView implements AttachmentRow.Listener {
 
     private static final String TAG = "BeaconAttachmentsView";
 
@@ -34,6 +36,7 @@ public class BeaconAttachmentsView extends FrameLayout {
     private Beacon beacon;
     private Listener listener;
     private String namespace;
+    private ProximityBeacon proximityBeacon;
 
     public BeaconAttachmentsView(Context context) {
         super(context);
@@ -57,14 +60,16 @@ public class BeaconAttachmentsView extends FrameLayout {
         beaconAttachments = Views.findById(this, R.id.beacon_attachments_root);
     }
 
-    public void updateWith(Beacon beacon, String namespace, Listener listener) {
+    public void updateWith(Beacon beacon, String namespace, Listener listener, ProximityBeacon proximityBeacon) {
         this.beacon = beacon;
         this.namespace = namespace;
         this.listener = listener;
+        this.proximityBeacon = proximityBeacon;
 
         updateVisibility(beacon);
         bindNamespace(namespace);
         bindClickListener();
+        listAttachments();
     }
 
     private void bindNamespace(String namespace) {
@@ -88,7 +93,48 @@ public class BeaconAttachmentsView extends FrameLayout {
         }
     }
 
+    private void listAttachments() {
+        Callback listAttachmentsCallback = new Callback() {
+            @Override
+            public void onFailure(Request request, IOException e) {
+                Log.d(TAG, "Failed request: " + request, e);
+            }
+
+            @Override
+            public void onResponse(Response response) throws IOException {
+                String body = response.body().string();
+                if (response.isSuccessful()) {
+                    try {
+
+                        JSONObject json = new JSONObject(body);
+                        if (body.length() == 0) {  // No attachment data
+                            return;
+                        }
+                        JSONArray attachments = json.getJSONArray("attachments");
+                        for (int i = 0; i < attachments.length(); i++) {
+                            JSONObject attachment = attachments.getJSONObject(i);
+                            addAttachmentView(attachment);
+                        }
+
+                    } catch (JSONException e) {
+                        Log.e(TAG, "JSONException in fetching attachments", e);
+                    }
+                } else {
+                    Log.d(TAG, "Unsuccessful listAttachments request: " + body);
+                }
+            }
+        };
+        proximityBeacon.listAttachments(listAttachmentsCallback, beacon.getBeaconName());
+    }
+
+    private void addAttachmentView(JSONObject json) throws JSONException {
+        AttachmentRow row = (AttachmentRow) LayoutInflater.from(getContext()).inflate(R.layout.view_beacon_attachments_item, beaconAttachments, false);
+        row.updateWith(json, BeaconAttachmentsView.this);
+        beaconAttachments.addView(row);
+    }
+
     public void addAttachment(final ProximityBeacon proximityBeacon, String type, String data) {
+        this.proximityBeacon = proximityBeacon;
 
         JSONObject body = buildCreateAttachmentJsonBody(namespace, type, data);
 
@@ -104,7 +150,7 @@ public class BeaconAttachmentsView extends FrameLayout {
                 if (response.isSuccessful()) {
                     try {
                         JSONObject json = new JSONObject(body);
-                        beaconAttachments.addView(makeAttachmentRow(json, proximityBeacon));
+                        addAttachmentView(json);
                     } catch (JSONException e) {
                         Log.d(TAG, "JSONException in building attachment data", e);
                     }
@@ -119,7 +165,8 @@ public class BeaconAttachmentsView extends FrameLayout {
 
     private JSONObject buildCreateAttachmentJsonBody(String namespace, String type, String data) {
         try {
-            return new JSONObject().put("namespacedType", namespace + "/" + type)
+            return new JSONObject()
+                    .put("namespacedType", namespace + "/" + type)
                     .put("data", StringUtils.base64Encode(data.getBytes()));
         } catch (JSONException e) {
             Log.e(TAG, "JSONException", e);
@@ -127,10 +174,28 @@ public class BeaconAttachmentsView extends FrameLayout {
         return null;
     }
 
-    private AttachmentRow makeAttachmentRow(JSONObject attachment, ProximityBeacon proximityBeacon) throws JSONException {
-        AttachmentRow row = new AttachmentRow(getContext());
-        row.updateWith(attachment, proximityBeacon);
-        return row;
+    @Override
+    public void onRemoveAttachment(String attachmentName, final int id) {
+        Callback deleteAttachmentCallback = new Callback() {
+            @Override
+            public void onFailure(Request request, IOException e) {
+                Log.d(TAG, "Failed request: " + request, e);
+            }
+
+            @Override
+            public void onResponse(Response response) throws IOException {
+                if (response.isSuccessful()) {
+                    Snackbar.make(BeaconAttachmentsView.this, R.string.manage_beacon_update_complete, Snackbar.LENGTH_LONG).show();
+                    beaconAttachments.removeView(findViewById(id));
+                } else {
+                    String body = response.body().string();
+                    Snackbar.make(BeaconAttachmentsView.this, R.string.manage_beacon_update_failure, Snackbar.LENGTH_LONG).show();
+                    Log.d(TAG, "Unsuccessful deleteAttachment request: " + body);
+                }
+            }
+        };
+        Snackbar.make(this, R.string.removing_attachment, Snackbar.LENGTH_LONG).show();
+        proximityBeacon.deleteAttachment(deleteAttachmentCallback, attachmentName);
     }
 
     public interface Listener {

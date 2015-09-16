@@ -152,7 +152,7 @@ public class ManageBeaconActivity extends AppCompatActivity implements BeaconLoc
     private void updateWith(Beacon beacon) {
         beaconInfoView.updateWith(beacon, this);
         beaconLocationView.updateWith(beacon, this);
-        beaconAttachmentsView.updateWith(beacon, namespace, this);
+        beaconAttachmentsView.updateWith(beacon, namespace, this, proximityBeacon);
     }
 
     @Override

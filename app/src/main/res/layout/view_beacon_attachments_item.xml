@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.malmstein.eddystonesample.manage.AttachmentRow xmlns:android="http://schemas.android.com/apk/res/android"
   android:id="@+id/beacon_item_root"
   android:background="@drawable/selector_card_clickable"
   android:layout_width="match_parent"
@@ -12,23 +12,25 @@
     style="@style/Eddystone.Subhead"
     android:id="@+id/beacon_attachment_item_data"
     android:textColor="@color/black"
-    android:layout_width="wrap_content"
+    android:layout_weight="1"
+    android:layout_width="0dp"
     android:layout_height="wrap_content" />
 
   <TextView
     style="@style/Eddystone.Subhead"
     android:id="@+id/beacon_attachment_item_type"
     android:textColor="@color/black"
-    android:layout_width="wrap_content"
+    android:layout_weight="1"
+    android:layout_width="0dp"
     android:layout_height="wrap_content"
     android:layout_marginStart="@dimen/card_inset_padding" />
 
-  <TextView
+  <Button
     android:id="@+id/beacon_attachment_item_remove"
     style="@style/Eddystone.Button"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:text="-"
+    android:text="X"
     android:layout_marginStart="@dimen/card_inset_padding" />
 
-</LinearLayout>
+</com.malmstein.eddystonesample.manage.AttachmentRow>
