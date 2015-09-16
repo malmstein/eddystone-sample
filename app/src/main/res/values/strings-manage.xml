@@ -2,6 +2,7 @@
   <string name="action_register">Register</string>
   <string name="action_deactivate">Deactivate</string>
   <string name="action_activate">Activate</string>
+  <string name="action_decommission">Decommission</string>
   <string name="action_add_attachment">Add attachment</string>
 
   <string name="title_details">Details</string>

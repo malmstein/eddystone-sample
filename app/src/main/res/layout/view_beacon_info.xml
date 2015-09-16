@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:app="http://schemas.android.com/apk/res-auto"
   android:id="@+id/beacon_item_root"
   android:background="@drawable/selector_card_clickable"
   android:layout_width="match_parent"
@@ -65,12 +64,28 @@
     android:drawablePadding="@dimen/card_inset_padding"
     android:paddingTop="@dimen/card_inset_padding" />
 
-  <TextView
-    android:id="@+id/beacon_info_action"
-    style="@style/Eddystone.Button"
-    android:layout_width="wrap_content"
+  <LinearLayout
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:text="@string/action_deactivate"
-    android:layout_marginTop="@dimen/card_inset_padding" />
+    android:orientation="horizontal"
+    android:layout_marginTop="@dimen/card_inset_padding">
+
+    <TextView
+      android:id="@+id/beacon_info_action"
+      style="@style/Eddystone.Button"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="@string/action_deactivate"/>
+
+    <TextView
+      android:id="@+id/beacon_info_decommission"
+      style="@style/Eddystone.Button"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="@string/action_decommission"
+      android:layout_marginStart="@dimen/card_inset_padding" />
+
+  </LinearLayout>
+
 
 </LinearLayout>

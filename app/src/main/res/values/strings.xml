@@ -4,7 +4,6 @@
   <string name="activity_scanning">Eddystone Sample</string>
   <string name="activity_manage">Manage Beacon</string>
 
-  <string name="action_deactivate">Deactivate</string>
   <string name="action_add_attachment">Add attachment</string>
   <string name="action_disconnect">Disconnect</string>
 

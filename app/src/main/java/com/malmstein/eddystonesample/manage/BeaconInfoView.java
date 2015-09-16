@@ -20,6 +20,7 @@ public class BeaconInfoView extends CardView {
     private TextView beaconStability;
     private TextView beaconDescription;
     private TextView beaconAction;
+    private TextView beaconDecommission;
 
     public BeaconInfoView(Context context) {
         super(context);
@@ -44,6 +45,7 @@ public class BeaconInfoView extends CardView {
         beaconStability = Views.findById(this, R.id.beacon_info_stability);
         beaconDescription = Views.findById(this, R.id.beacon_info_description);
         beaconAction = Views.findById(this, R.id.beacon_info_action);
+        beaconDecommission = Views.findById(this, R.id.beacon_info_decommission);
     }
 
     public void updateWith(Beacon beacon, Listener listener) {
@@ -53,6 +55,7 @@ public class BeaconInfoView extends CardView {
 
         bindDescription(beacon);
         bindStability(beacon);
+        bindDecommission();
         bindStatus(beacon.getStatus());
     }
 
@@ -78,6 +81,15 @@ public class BeaconInfoView extends CardView {
         });
     }
 
+    private void bindDecommission() {
+        beaconDecommission.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onDecommissionBeacon();
+            }
+        });
+    }
+
     private void bindStatus(Beacon.Status status) {
         beaconStatus.setText(status.name());
 
@@ -87,18 +99,15 @@ public class BeaconInfoView extends CardView {
                 break;
             case ACTIVE:
                 enableDeactivate();
-                decommissionButton.setEnabled(false);
-                decommissionButton.setVisibility(View.GONE);
+                disableDecommission();
                 break;
             case INACTIVE:
                 enableActivate();
-                decommissionButton.setEnabled(true);
-                decommissionButton.setVisibility(View.VISIBLE);
+                enableDecommission();
                 break;
             case DECOMMISSIONED:
-                actionButton.setVisibility(View.GONE);
-                decommissionButton.setEnabled(false);
-                decommissionButton.setVisibility(View.GONE);
+                beaconAction.setVisibility(View.GONE);
+                disableDecommission();
                 break;
         }
     }
@@ -133,6 +142,14 @@ public class BeaconInfoView extends CardView {
         });
     }
 
+    private void enableDecommission() {
+        beaconDecommission.setVisibility(View.VISIBLE);
+    }
+
+    private void disableDecommission() {
+        beaconDecommission.setVisibility(View.VISIBLE);
+    }
+
     public interface Listener {
         void onChangeStability();
 
@@ -143,6 +160,8 @@ public class BeaconInfoView extends CardView {
         void onDeactivateBeacon();
 
         void onActivateBeacon();
+
+        void onDecommissionBeacon();
 
         void onChangeStatus();
     }
