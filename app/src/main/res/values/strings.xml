@@ -13,28 +13,7 @@
   <string name="use_account">Using %1$s account</string>
   <string name="please_pick_account">Please pick an account</string>
 
-  <string name="title_details">Details</string>
-  <string name="title_location">Location</string>
-  <string name="title_attachments">Attachments</string>
-
-  <string name="beacon_stability_dialog_title">Set beacon stability</string>
-  <string name="beacon_stability">Tap to set expected stability</string>
-  <string-array name="beacon_stability_enums">
-    <item>STABLE</item>
-    <item>PORTABLE</item>
-    <item>MOBILE</item>
-    <item>ROVING</item>
-  </string-array>
-
-  <string name="beacon_description_dialog_title">Set beacon description</string>
   <string name="dialog_update">Update</string>
   <string name="dialog_cancel">Cancel</string>
-
-  <string name="tap_map_to_add_location">Tap on the map to set the Beacon\'s location </string>
-  <string name="manage_beacon_update">Updating beacon…</string>
-  <string name="manage_beacon_update_failure">Error updating beacon</string>
-  <string name="manage_beacon_update_complete">Beacon successfully updated</string>
-  <string name="manage_beacon_description">Tap to set Beacon description</string>
-  <string name="manage_beacon_description_hint">Beacon description</string>
 
 </resources>

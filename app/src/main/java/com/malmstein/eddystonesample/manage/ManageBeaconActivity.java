@@ -130,32 +130,6 @@ public class ManageBeaconActivity extends AppCompatActivity implements BeaconLoc
     }
 
     private void updateRemoteBeacon() {
-        Callback updateBeaconCallback = new Callback() {
-            @Override
-            public void onFailure(Request request, IOException e) {
-                Log.d(TAG, "Failed request: " + request, e);
-                Snackbar.make(beaconInfoView, R.string.manage_beacon_update_failure, Snackbar.LENGTH_LONG).show();
-            }
-
-            @Override
-            public void onResponse(Response response) throws IOException {
-                String body = response.body().string();
-                if (response.isSuccessful()) {
-                    try {
-                        beacon = new Beacon(new JSONObject(body));
-                    } catch (JSONException e) {
-                        Log.d(TAG, "Failed JSON creation from response: " + body, e);
-                        return;
-                    }
-                    updateWith(beacon);
-                    Snackbar.make(beaconInfoView, R.string.manage_beacon_update_complete, Snackbar.LENGTH_LONG).show();
-                } else {
-                    Log.d(TAG, "Unsuccessful updateBeacon request: " + body);
-                    Snackbar.make(beaconInfoView, R.string.manage_beacon_update_failure, Snackbar.LENGTH_LONG).show();
-                }
-            }
-        };
-
         JSONObject json;
         try {
             json = beacon.toJson();
@@ -167,6 +141,32 @@ public class ManageBeaconActivity extends AppCompatActivity implements BeaconLoc
         proximityBeacon.updateBeacon(updateBeaconCallback, beacon.getBeaconName(), json);
     }
 
+    Callback updateBeaconCallback = new Callback() {
+        @Override
+        public void onFailure(Request request, IOException e) {
+            Log.d(TAG, "Failed request: " + request, e);
+            Snackbar.make(beaconInfoView, R.string.manage_beacon_update_failure, Snackbar.LENGTH_LONG).show();
+        }
+
+        @Override
+        public void onResponse(Response response) throws IOException {
+            String body = response.body().string();
+            if (response.isSuccessful()) {
+                try {
+                    beacon = new Beacon(new JSONObject(body));
+                } catch (JSONException e) {
+                    Log.d(TAG, "Failed JSON creation from response: " + body, e);
+                    return;
+                }
+                updateWith(beacon);
+                Snackbar.make(beaconInfoView, R.string.manage_beacon_update_complete, Snackbar.LENGTH_LONG).show();
+            } else {
+                Log.d(TAG, "Unsuccessful updateBeacon request: " + body);
+                Snackbar.make(beaconInfoView, R.string.manage_beacon_update_failure, Snackbar.LENGTH_LONG).show();
+            }
+        }
+    };
+
     @Override
     public void onChangeStability() {
         DialogFragment newFragment = new BeaconStabilityDialogFragment();
@@ -177,6 +177,34 @@ public class ManageBeaconActivity extends AppCompatActivity implements BeaconLoc
     public void onChangeDescription() {
         DialogFragment newFragment = new BeaconDescriptionFragment();
         newFragment.show(getSupportFragmentManager(), "BeaconDescription");
+    }
+
+    @Override
+    public void onRegisterBeacon() {
+        try {
+            JSONObject activeBeacon = beacon.toJson().put("status", Beacon.Status.ACTIVE.name());
+            Snackbar.make(beaconInfoView, R.string.manage_beacon_update, Snackbar.LENGTH_LONG).show();
+            proximityBeacon.registerBeacon(updateBeaconCallback, activeBeacon);
+        } catch (JSONException e) {
+            Log.d(TAG, "Unsuccessful onRegisterBeacon request: " + e.getMessage());
+        }
+    }
+
+    @Override
+    public void onDeactivateBeacon() {
+        Snackbar.make(beaconInfoView, R.string.manage_beacon_update, Snackbar.LENGTH_LONG).show();
+        proximityBeacon.deactivateBeacon(updateBeaconCallback, beacon.getBeaconName());
+    }
+
+    @Override
+    public void onActivateBeacon() {
+        Snackbar.make(beaconInfoView, R.string.manage_beacon_update, Snackbar.LENGTH_LONG).show();
+        proximityBeacon.activateBeacon(updateBeaconCallback, beacon.getBeaconName());
+    }
+
+    @Override
+    public void onChangeStatus() {
+        //updateBeaconStatus();
     }
 
     @Override

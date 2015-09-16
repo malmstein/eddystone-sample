@@ -3,6 +3,7 @@ package com.malmstein.eddystonesample.manage;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.FrameLayout;
 
 import com.malmstein.eddystonesample.R;
@@ -29,6 +30,14 @@ public class BeaconAttachmentsView extends FrameLayout {
     }
 
     public void updateWith(Beacon beacon) {
+        updateVisibility(beacon);
+    }
 
+    private void updateVisibility(Beacon beacon) {
+        if (beacon.getStatus().equals(Beacon.Status.UNREGISTERED)) {
+            setVisibility(View.GONE);
+        } else {
+            setVisibility(View.VISIBLE);
+        }
     }
 }

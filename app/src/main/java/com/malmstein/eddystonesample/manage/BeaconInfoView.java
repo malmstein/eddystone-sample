@@ -19,6 +19,7 @@ public class BeaconInfoView extends CardView {
     private TextView beaconStatus;
     private TextView beaconStability;
     private TextView beaconDescription;
+    private TextView beaconAction;
 
     public BeaconInfoView(Context context) {
         super(context);
@@ -42,16 +43,17 @@ public class BeaconInfoView extends CardView {
         beaconStatus = Views.findById(this, R.id.beacon_info_status);
         beaconStability = Views.findById(this, R.id.beacon_info_stability);
         beaconDescription = Views.findById(this, R.id.beacon_info_description);
+        beaconAction = Views.findById(this, R.id.beacon_info_action);
     }
 
     public void updateWith(Beacon beacon, Listener listener) {
         this.listener = listener;
         beaconType.setText(beacon.getType());
         beaconId.setText(beacon.getHexId());
-        beaconStatus.setText(beacon.getStatus().name());
 
         bindDescription(beacon);
         bindStability(beacon);
+        bindStatus(beacon.getStatus());
     }
 
     private void bindDescription(final Beacon beacon) {
@@ -76,10 +78,73 @@ public class BeaconInfoView extends CardView {
         });
     }
 
+    private void bindStatus(Beacon.Status status) {
+        beaconStatus.setText(status.name());
+
+        switch (status) {
+            case UNREGISTERED:
+                enableRegister();
+                break;
+            case ACTIVE:
+                enableDeactivate();
+                decommissionButton.setEnabled(false);
+                decommissionButton.setVisibility(View.GONE);
+                break;
+            case INACTIVE:
+                enableActivate();
+                decommissionButton.setEnabled(true);
+                decommissionButton.setVisibility(View.VISIBLE);
+                break;
+            case DECOMMISSIONED:
+                actionButton.setVisibility(View.GONE);
+                decommissionButton.setEnabled(false);
+                decommissionButton.setVisibility(View.GONE);
+                break;
+        }
+    }
+
+    private void enableRegister() {
+        beaconAction.setText(R.string.action_register);
+        beaconAction.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onRegisterBeacon();
+            }
+        });
+    }
+
+    private void enableDeactivate() {
+        beaconAction.setText(R.string.action_deactivate);
+        beaconAction.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onDeactivateBeacon();
+            }
+        });
+    }
+
+    private void enableActivate() {
+        beaconAction.setText(R.string.action_activate);
+        beaconAction.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onActivateBeacon();
+            }
+        });
+    }
+
     public interface Listener {
         void onChangeStability();
 
         void onChangeDescription();
+
+        void onRegisterBeacon();
+
+        void onDeactivateBeacon();
+
+        void onActivateBeacon();
+
+        void onChangeStatus();
     }
 
 }

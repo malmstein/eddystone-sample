@@ -66,7 +66,7 @@
     android:paddingTop="@dimen/card_inset_padding" />
 
   <TextView
-    android:id="@+id/beacon_info_deactivate"
+    android:id="@+id/beacon_info_action"
     style="@style/Eddystone.Button"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
