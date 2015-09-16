@@ -29,6 +29,8 @@ public class BeaconAttachmentsView extends CardView implements AttachmentRow.Lis
 
     private static final String TAG = "BeaconAttachmentsView";
 
+    private View loadingView;
+    private View contentView;
     private TextView beaconAddAttachment;
     private TextView beaconNamespace;
     private LinearLayout beaconAttachments;
@@ -54,6 +56,9 @@ public class BeaconAttachmentsView extends CardView implements AttachmentRow.Lis
     protected void onFinishInflate() {
         super.onFinishInflate();
         LayoutInflater.from(getContext()).inflate(R.layout.view_beacon_attachments, this, true);
+
+        loadingView = Views.findById(this, R.id.beacon_attachments_loading);
+        contentView = Views.findById(this, R.id.beacon_attachments_content);
 
         beaconAddAttachment = Views.findById(this, R.id.beacon_attachments_add);
         beaconNamespace = Views.findById(this, R.id.beacon_attachments_namespace);
@@ -122,6 +127,9 @@ public class BeaconAttachmentsView extends CardView implements AttachmentRow.Lis
                 } else {
                     Log.d(TAG, "Unsuccessful listAttachments request: " + body);
                 }
+
+                loadingView.setVisibility(View.GONE);
+                contentView.setVisibility(View.VISIBLE);
             }
         };
         proximityBeacon.listAttachments(listAttachmentsCallback, beacon.getBeaconName());

@@ -1,40 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  android:id="@+id/beacon_item_root"
-  android:background="@drawable/selector_card_clickable"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
   android:layout_width="match_parent"
-  android:layout_height="match_parent"
-  android:orientation="vertical"
-  android:padding="@dimen/card_content_padding">
+  android:layout_height="wrap_content">
 
-  <TextView
-    style="@style/Eddystone.Title"
-    android:text="@string/title_attachments"
-    android:textColor="@color/black"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content" />
-
-  <TextView
-    style="@style/Eddystone.Subhead"
-    android:id="@+id/beacon_attachments_namespace"
-    android:textColor="@color/grey"
+  <ProgressBar
+    style="@android:style/Widget.Material.ProgressBar"
+    android:id="@+id/beacon_attachments_loading"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:paddingTop="@dimen/card_inset_padding" />
+    android:layout_gravity="center"
+    android:padding="@dimen/card_content_padding"/>
 
   <LinearLayout
-    android:id="@+id/beacon_attachments_root"
+    android:id="@+id/beacon_attachments_content"
+    android:background="@drawable/selector_card_clickable"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"/>
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="@dimen/card_content_padding"
+    android:visibility="gone">
 
-  <TextView
-    android:id="@+id/beacon_attachments_add"
-    style="@style/Eddystone.Button"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="@string/action_add_attachment"
-    android:layout_marginTop="@dimen/card_inset_padding" />
+    <TextView
+      style="@style/Eddystone.Title"
+      android:text="@string/title_attachments"
+      android:textColor="@color/black"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content" />
 
-</LinearLayout>
+    <TextView
+      style="@style/Eddystone.Subhead"
+      android:id="@+id/beacon_attachments_namespace"
+      android:textColor="@color/grey"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:paddingTop="@dimen/card_inset_padding" />
+
+    <LinearLayout
+      android:id="@+id/beacon_attachments_root"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="vertical" />
+
+    <TextView
+      android:id="@+id/beacon_attachments_add"
+      style="@style/Eddystone.Button"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="@string/action_add_attachment"
+      android:layout_marginTop="@dimen/card_inset_padding" />
+
+  </LinearLayout>
+
+</FrameLayout>
+
+
