@@ -48,8 +48,9 @@ public class ManageBeaconActivity extends AppCompatActivity implements BeaconLoc
 
     private Beacon beacon;
     private ProximityBeaconImpl proximityBeacon;
-    private String namespace;
     private BluetoothScanner bluetoothScanner;
+
+    private String namespace;
 
     private Beacon getBeacon() {
         return (Beacon) getIntent().getExtras().getSerializable(KEY_BEACON);
@@ -295,7 +296,8 @@ public class ManageBeaconActivity extends AppCompatActivity implements BeaconLoc
     }
 
     @Override
-    public void onBeaconScanned(Beacon beacon) {
+    public void onBeaconScanned(Beacon updatedBeacon) {
+        beacon = updatedBeacon;
         updateWith(beacon);
         Snackbar.make(beaconInfoView, R.string.manage_beacon_update_complete, Snackbar.LENGTH_LONG).show();
     }
