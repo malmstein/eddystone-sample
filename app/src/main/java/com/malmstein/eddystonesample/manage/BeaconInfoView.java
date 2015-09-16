@@ -165,8 +165,6 @@ public class BeaconInfoView extends CardView {
         void onActivateBeacon();
 
         void onDecommissionBeacon();
-
-        void onChangeStatus();
     }
 
 }

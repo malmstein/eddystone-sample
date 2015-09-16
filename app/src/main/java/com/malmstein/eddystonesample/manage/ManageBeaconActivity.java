@@ -258,8 +258,7 @@ public class ManageBeaconActivity extends AppCompatActivity implements BeaconLoc
 //                                    beacon.status = Beacon.STATUS_DECOMMISSIONED;
 //                                    updateBeacon();
 
-                                    updateWith(beacon);
-                                    Snackbar.make(beaconInfoView, R.string.manage_beacon_update_complete, Snackbar.LENGTH_LONG).show();
+                                    bluetoothScanner.fetchBeaconStatus(beacon);
                                 } else {
                                     String body = response.body().string();
                                     Log.d(TAG, "Unsuccessful decommissionBeacon request: " + body);
@@ -276,11 +275,6 @@ public class ManageBeaconActivity extends AppCompatActivity implements BeaconLoc
                     }
                 })
                 .show();
-    }
-
-    @Override
-    public void onChangeStatus() {
-        //updateBeaconStatus();
     }
 
     @Override
