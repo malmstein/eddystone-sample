@@ -74,6 +74,14 @@ public class ManageBeaconActivity extends AppCompatActivity implements BeaconLoc
     }
 
     @Override
+    public void onBackPressed() {
+        Intent updatedBeacon = new Intent();
+        updatedBeacon.putExtra(KEY_BEACON, beacon);
+        setResult(Activity.RESULT_OK, updatedBeacon);
+        super.onBackPressed();
+    }
+
+    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_CODE_PLACE_PICKER) {
             if (resultCode == Activity.RESULT_OK) {
@@ -106,6 +114,12 @@ public class ManageBeaconActivity extends AppCompatActivity implements BeaconLoc
         beaconInfoView.updateWith(beacon, this);
         beaconLocationView.updateWith(beacon, this);
         beaconAttachmentsView.updateWith(beacon);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
     }
 
     private void fetchNamespace() {

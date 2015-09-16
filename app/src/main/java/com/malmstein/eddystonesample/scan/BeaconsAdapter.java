@@ -157,6 +157,11 @@ public class BeaconsAdapter extends RecyclerView.Adapter<BeaconsAdapter.ViewHold
         notifyDataSetChanged();
     }
 
+    public void replace(Beacon updatedBeacon) {
+        updateBeaconsList(updatedBeacon);
+        notifyDataSetChanged();
+    }
+
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public ImageView registrationStatus;
         public TextView beaconId;

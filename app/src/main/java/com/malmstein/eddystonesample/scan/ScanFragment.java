@@ -1,5 +1,6 @@
 package com.malmstein.eddystonesample.scan;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
@@ -20,6 +21,8 @@ import java.util.ArrayList;
 
 public class ScanFragment extends Fragment implements BeaconsAdapter.Listener {
 
+    private static final int REQUEST_CODE_MANAGE_BEACON = 1005;
+
     private BeaconsAdapter beaconsAdapter;
     private RecyclerView beaconsList;
 
@@ -38,6 +41,19 @@ public class ScanFragment extends Fragment implements BeaconsAdapter.Listener {
         return rootView;
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == REQUEST_CODE_MANAGE_BEACON) {
+            if (resultCode == Activity.RESULT_OK) {
+                Beacon updatedBeacon = (Beacon) data.getExtras().getSerializable(ManageBeaconActivity.KEY_BEACON);
+                beaconsAdapter.replace(updatedBeacon);
+            }
+        }
+
+    }
+
     public void updateWith(Beacon beacon) {
         beaconsAdapter.updateWith(beacon);
     }
@@ -49,12 +65,13 @@ public class ScanFragment extends Fragment implements BeaconsAdapter.Listener {
     @Override
     public void onBeaconClicked(Beacon beacon) {
         AccountSharedPreferences accountSharedPreferences = AccountSharedPreferences.newInstance(getActivity());
-        if (accountSharedPreferences.isLoggedIn()){
+        if (accountSharedPreferences.isLoggedIn()) {
             Intent manageBeacon = new Intent(getActivity(), ManageBeaconActivity.class);
             manageBeacon.putExtra(ManageBeaconActivity.KEY_BEACON, beacon);
-            startActivity(manageBeacon);
+            startActivityForResult(manageBeacon, REQUEST_CODE_MANAGE_BEACON);
         } else {
             Snackbar.make(beaconsList, getString(R.string.choose_account), Snackbar.LENGTH_LONG).show();
         }
     }
+
 }
