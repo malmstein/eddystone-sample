@@ -22,6 +22,7 @@ import com.malmstein.eddystonesample.BuildConfig;
 import com.malmstein.eddystonesample.R;
 import com.malmstein.eddystonesample.account.AccountSharedPreferences;
 import com.malmstein.eddystonesample.model.Beacon;
+import com.malmstein.eddystonesample.proximitybeacon.BluetoothScanner;
 import com.malmstein.eddystonesample.proximitybeacon.ProximityBeaconImpl;
 import com.novoda.notils.caster.Views;
 import com.squareup.okhttp.Callback;
@@ -30,10 +31,11 @@ import com.squareup.okhttp.Response;
 
 import java.io.IOException;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class ManageBeaconActivity extends AppCompatActivity implements BeaconLocationView.Listener, BeaconInfoView.Listener, BeaconStabilityDialogFragment.Listener, BeaconDescriptionFragment.Listener {
+public class ManageBeaconActivity extends AppCompatActivity implements BeaconLocationView.Listener, BeaconInfoView.Listener, BeaconStabilityDialogFragment.Listener, BeaconDescriptionFragment.Listener, BluetoothScanner.Listener {
 
     private static final String TAG = "ManageBeaconActivity";
     public static final String KEY_BEACON = BuildConfig.APPLICATION_ID + "EXTRA_BEACON";
@@ -46,6 +48,8 @@ public class ManageBeaconActivity extends AppCompatActivity implements BeaconLoc
 
     private Beacon beacon;
     private ProximityBeaconImpl proximityBeacon;
+    private String namespace;
+    private BluetoothScanner bluetoothScanner;
 
     private Beacon getBeacon() {
         return (Beacon) getIntent().getExtras().getSerializable(KEY_BEACON);
@@ -105,8 +109,8 @@ public class ManageBeaconActivity extends AppCompatActivity implements BeaconLoc
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
         proximityBeacon = new ProximityBeaconImpl(this, AccountSharedPreferences.newInstance(this).getAccount());
+        bluetoothScanner = new BluetoothScanner(proximityBeacon, this);
         beacon = getBeacon();
-        updateWith(beacon);
         fetchNamespace();
     }
 
@@ -116,23 +120,43 @@ public class ManageBeaconActivity extends AppCompatActivity implements BeaconLoc
         beaconAttachmentsView.updateWith(beacon);
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-
-    }
-
     private void fetchNamespace() {
+        Callback listNamespacesCallback = new Callback() {
+            @Override
+            public void onFailure(Request request, IOException e) {
+                Log.d(TAG, "Failed request: " + request, e);
+            }
 
+            @Override
+            public void onResponse(Response response) throws IOException {
+                String body = response.body().string();
+                if (response.isSuccessful()) {
+                    try {
+                        JSONObject json = new JSONObject(body);
+                        JSONArray namespaces = json.getJSONArray("namespaces");
+                        String tmp = namespaces.getJSONObject(0).getString("namespaceName");
+                        if (tmp.startsWith("namespaces/")) {
+                            namespace = tmp.substring("namespaces/".length());
+                        } else {
+                            namespace = tmp;
+                        }
+                        updateWith(beacon);
+                    } catch (JSONException e) {
+                        Log.e(TAG, "JSONException", e);
+                    }
+                } else {
+                    Log.d(TAG, "Unsuccessful listNamespaces request: " + body);
+                }
+            }
+        };
+        proximityBeacon.listNamespaces(listNamespacesCallback);
     }
 
     @Override
     public void onRequestPlacePicker(LatLng latLng) {
         try {
             startPlacePickerIntnet(latLng);
-        } catch (GooglePlayServicesRepairableException e) {
-            e.printStackTrace();
-        } catch (GooglePlayServicesNotAvailableException e) {
+        } catch (GooglePlayServicesRepairableException | GooglePlayServicesNotAvailableException e) {
             e.printStackTrace();
         }
     }
@@ -168,14 +192,7 @@ public class ManageBeaconActivity extends AppCompatActivity implements BeaconLoc
         public void onResponse(Response response) throws IOException {
             String body = response.body().string();
             if (response.isSuccessful()) {
-                try {
-                    beacon = new Beacon(new JSONObject(body));
-                } catch (JSONException e) {
-                    Log.d(TAG, "Failed JSON creation from response: " + body, e);
-                    return;
-                }
-                updateWith(beacon);
-                Snackbar.make(beaconInfoView, R.string.manage_beacon_update_complete, Snackbar.LENGTH_LONG).show();
+                bluetoothScanner.fetchBeaconStatus(beacon);
             } else {
                 Log.d(TAG, "Unsuccessful updateBeacon request: " + body);
                 Snackbar.make(beaconInfoView, R.string.manage_beacon_update_failure, Snackbar.LENGTH_LONG).show();
@@ -275,5 +292,11 @@ public class ManageBeaconActivity extends AppCompatActivity implements BeaconLoc
     public void onBeaconDescriptionChanged(String description) {
         beacon.setDescription(description);
         updateRemoteBeacon();
+    }
+
+    @Override
+    public void onBeaconScanned(Beacon beacon) {
+        updateWith(beacon);
+        Snackbar.make(beaconInfoView, R.string.manage_beacon_update_complete, Snackbar.LENGTH_LONG).show();
     }
 }

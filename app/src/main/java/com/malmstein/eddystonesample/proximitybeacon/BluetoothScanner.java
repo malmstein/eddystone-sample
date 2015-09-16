@@ -68,7 +68,7 @@ public class BluetoothScanner {
     }
 
 
-    private void fetchBeaconStatus(final Beacon beacon) {
+    public void fetchBeaconStatus(final Beacon beacon) {
         // only signed in accounts with permissions are able to retrieve the beacon state
         if ((proximityBeacon == null)) {
             listener.onBeaconScanned(beacon);
