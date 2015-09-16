@@ -2,6 +2,7 @@ package com.malmstein.eddystonesample.manage;
 
 import android.content.Context;
 import android.support.v7.widget.CardView;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -60,7 +61,9 @@ public class BeaconInfoView extends CardView {
     }
 
     private void bindDescription(final Beacon beacon) {
-        beaconDescription.setText(beacon.getDescription());
+        beaconDescription.setText(TextUtils.isEmpty(beacon.getDescription()) ?
+                getContext().getResources().getString(R.string.manage_beacon_description) :
+                beacon.getDescription());
         beaconDescription.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {

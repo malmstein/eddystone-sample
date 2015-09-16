@@ -18,7 +18,6 @@
   <TextView
     style="@style/Eddystone.Subhead"
     android:id="@+id/beacon_info_type"
-    android:text="Eddystone"
     android:textColor="@color/grey"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
@@ -27,7 +26,6 @@
   <TextView
     style="@style/Eddystone.Subhead"
     android:id="@+id/beacon_info_id"
-    android:text="1123123n12k3n1lkn123"
     android:textColor="@color/grey"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
@@ -36,7 +34,6 @@
   <TextView
     style="@style/Eddystone.Subhead"
     android:id="@+id/beacon_info_status"
-    android:text="Status"
     android:textColor="@color/grey"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
@@ -45,7 +42,6 @@
   <TextView
     style="@style/Eddystone.Subhead"
     android:id="@+id/beacon_info_stability"
-    android:text="@string/beacon_stability"
     android:textColor="@color/grey"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
@@ -56,7 +52,6 @@
   <TextView
     style="@style/Eddystone.Subhead"
     android:id="@+id/beacon_info_description"
-    android:text="@string/manage_beacon_description"
     android:textColor="@color/grey"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
@@ -86,6 +81,5 @@
       android:layout_marginStart="@dimen/card_inset_padding" />
 
   </LinearLayout>
-
 
 </LinearLayout>
