@@ -36,7 +36,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class ManageBeaconActivity extends AppCompatActivity implements BeaconLocationView.Listener, BeaconInfoView.Listener, BeaconStabilityDialogFragment.Listener, BeaconDescriptionFragment.Listener, BluetoothScanner.Listener {
+public class ManageBeaconActivity extends AppCompatActivity implements BeaconLocationView.Listener, BeaconInfoView.Listener, BeaconStabilityDialogFragment.Listener, BeaconDescriptionDialogFragment.Listener, BluetoothScanner.Listener, BeaconAttachmentsView.Listener, BeaconAttachmentDialogFragment.Listener {
 
     private static final String TAG = "ManageBeaconActivity";
     public static final String KEY_BEACON = BuildConfig.APPLICATION_ID + "EXTRA_BEACON";
@@ -117,12 +117,6 @@ public class ManageBeaconActivity extends AppCompatActivity implements BeaconLoc
         fetchNamespace();
     }
 
-    private void updateWith(Beacon beacon) {
-        beaconInfoView.updateWith(beacon, this);
-        beaconLocationView.updateWith(beacon, this);
-        beaconAttachmentsView.updateWith(beacon, namespace);
-    }
-
     private void fetchNamespace() {
         Callback listNamespacesCallback = new Callback() {
             @Override
@@ -153,6 +147,12 @@ public class ManageBeaconActivity extends AppCompatActivity implements BeaconLoc
             }
         };
         proximityBeacon.listNamespaces(listNamespacesCallback);
+    }
+
+    private void updateWith(Beacon beacon) {
+        beaconInfoView.updateWith(beacon, this);
+        beaconLocationView.updateWith(beacon, this);
+        beaconAttachmentsView.updateWith(beacon, namespace, this);
     }
 
     @Override
@@ -211,8 +211,14 @@ public class ManageBeaconActivity extends AppCompatActivity implements BeaconLoc
 
     @Override
     public void onChangeDescription() {
-        DialogFragment newFragment = new BeaconDescriptionFragment();
+        DialogFragment newFragment = new BeaconDescriptionDialogFragment();
         newFragment.show(getSupportFragmentManager(), "BeaconDescription");
+    }
+
+    @Override
+    public void onShowAttachmentDialog() {
+        DialogFragment newFragment = new BeaconAttachmentDialogFragment();
+        newFragment.show(getSupportFragmentManager(), "BeaconAttachment");
     }
 
     @Override
@@ -280,6 +286,11 @@ public class ManageBeaconActivity extends AppCompatActivity implements BeaconLoc
     }
 
     @Override
+    public void onAddAttachment(String type, String data) {
+        beaconAttachmentsView.addAttachment(proximityBeacon, type, data);
+    }
+
+    @Override
     public void onBeaconStabilityChanged(String newStability) {
         beacon.setExpectedStability(newStability);
         updateRemoteBeacon();
@@ -297,4 +308,5 @@ public class ManageBeaconActivity extends AppCompatActivity implements BeaconLoc
         updateWith(beacon);
         Snackbar.make(beaconInfoView, R.string.manage_beacon_update_complete, Snackbar.LENGTH_LONG).show();
     }
+
 }

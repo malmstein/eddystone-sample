@@ -14,7 +14,7 @@ import com.malmstein.eddystonesample.R;
 import com.novoda.notils.caster.Classes;
 import com.novoda.notils.caster.Views;
 
-public class BeaconDescriptionFragment extends DialogFragment {
+public class BeaconAttachmentDialogFragment extends DialogFragment {
 
     private Listener mListener;
 
@@ -25,7 +25,7 @@ public class BeaconDescriptionFragment extends DialogFragment {
             mListener = Classes.from(activity);
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
-                    + " must implement BeaconDescriptionFragment.Listener");
+                    + " must implement BeaconAttachmentDialogFragment.Listener");
         }
     }
 
@@ -35,15 +35,17 @@ public class BeaconDescriptionFragment extends DialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();
 
-        View view = inflater.inflate(R.layout.dialog_description, null);
-        final EditText descriptionView = Views.findById(view, R.id.beacon_dialog_description);
+        View view = inflater.inflate(R.layout.dialog_attachment, null);
+        final EditText dataView = Views.findById(view, R.id.beacon_dialog_attachment_data);
+        final EditText typeView = Views.findById(view, R.id.beacon_dialog_attachment_type);
 
         builder.setView(view)
                 .setPositiveButton(R.string.dialog_update, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
-                        String description = descriptionView.getText().toString();
-                        mListener.onBeaconDescriptionChanged(description);
+                        String type = dataView.getText().toString();
+                        String data = typeView.getText().toString();
+                        mListener.onAddAttachment(type, data);
                     }
                 })
                 .setNegativeButton(R.string.dialog_cancel, new DialogInterface.OnClickListener() {
@@ -54,8 +56,9 @@ public class BeaconDescriptionFragment extends DialogFragment {
         return builder.create();
     }
 
+
     public interface Listener {
-        void onBeaconDescriptionChanged(String description);
+        void onAddAttachment(String type, String data);
     }
 
 }
