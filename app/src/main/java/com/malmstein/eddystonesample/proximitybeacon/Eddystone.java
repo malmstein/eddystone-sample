@@ -51,12 +51,12 @@ public class Eddystone {
     }
 
     public static boolean isValid(ScanResult result) {
-        ScanRecord scanRecord = result.getScanRecord();
         if (result.getScanRecord() == null) {
             Log.w(TAG, "Null ScanRecord for device " + result.getDevice().getAddress());
             return false;
         }
 
+        ScanRecord scanRecord = result.getScanRecord();
         byte[] serviceData = scanRecord.getServiceData(Eddystone.EDDYSTONE_SERVICE_UUID);
         if (serviceData == null) {
             return false;

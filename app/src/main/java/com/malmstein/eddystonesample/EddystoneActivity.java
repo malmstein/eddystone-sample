@@ -131,7 +131,6 @@ public class EddystoneActivity extends AppCompatActivity implements BluetoothSca
     }
 
     private void startScanning(BluetoothAdapter btAdapter) {
-
         ScanFragment scanFragment = findScanFragment();
         scanFragment.reset();
 
